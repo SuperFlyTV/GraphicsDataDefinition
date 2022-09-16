@@ -1,0 +1,12 @@
+{
+  "name": "reference-gui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "http-server"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
