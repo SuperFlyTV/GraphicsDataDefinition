@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Table GFX Template</title>
+    <!-- This tag references the metadata -->
+    <meta type="gdd-1.0" src="table.json" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        font-size: 3vw;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      .container {
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.5s;
+      }
+      .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #position {
+        position: absolute;
+        top: 10vh;
+        left: 20vw;
+        right: 20vw;
+      }
+      .table-container {
+        border: 1px solid red;
+        transition: all 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="position">
+      <div id="table" class="table-container"></div>
+    </div>
+
+    <script type="text/javascript">
+      const tableContainer = document.querySelector("#table");
+      tableContainer.style.opacity = "0";
+
+      function update(data) {
+        let html = "<table>";
+
+        for (const person of data.people) {
+          html += row(person);
+        }
+        html += "</html>";
+
+        tableContainer.innerHTML = html;
+      }
+      function row(person) {
+        let html = `<tr style="color: ${person.favoriteColor ?? "inherit"};">`;
+
+        html += `<td>${person.name}</td>`;
+        html += `<td>${person.age}</td>`;
+
+        return `<tr>${html}</tr>`;
+      }
+      function play() {
+        setTimeout(() => {
+          tableContainer.style.opacity = "1";
+        }, 1);
+      }
+      function stop() {
+        tableContainer.style.opacity = "0";
+        // text0Container.style.width = "0";
+        // text1Container.style.width = "0";
+      }
+      update({
+        people: [
+          {
+            name: "Johan",
+            age: 33,
+            favoriteColor: "#3333dd",
+          },
+        ],
+      });
+      // play();
+      // setTimeout(() => {
+      //   stop();
+      // }, 1000);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 2000);
+    </script>
+  </body>
+</html>

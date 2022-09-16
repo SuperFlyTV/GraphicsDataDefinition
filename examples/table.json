@@ -1,0 +1,36 @@
+{
+    "title": "Table GFX Template",
+    "type": "object",
+    "properties": {
+        "people": {
+            "label": "People",
+            "description": "This is a list of people",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "label": "Name",
+                        "description": "Name of the person",
+                        "type": "string"
+                    },
+                    "age": {
+                        "label": "Age",
+                        "description": "Age, in years",
+                        "type": "integer"
+                    },
+                    "favoriteColor": {
+                        "label": "Favorite Color",
+                        "type": "string",
+                        "gddType": [
+                            "rrggbb"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "people"
+    ]
+}

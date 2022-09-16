@@ -1,0 +1,20 @@
+{
+    "tests": [
+        {
+            "shouldBeValid": true,
+            "data": {
+                "people": [
+                    {
+                        "name": "Johan",
+                        "age": 33,
+                        "favoriteColor": "#3333dd"
+                    }
+                ]
+            }
+        },
+        {
+            "shouldBeValid": false,
+            "data": {}
+        }
+    ]
+}
