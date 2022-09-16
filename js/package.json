@@ -1,0 +1,15 @@
+{
+  "name": "gdd-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "validate-examples": "nodemon validateExamples.js"
+  },
+  "dependencies": {
+    "jsonschema": "^1.4.1",
+    "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.19"
+  }
+}

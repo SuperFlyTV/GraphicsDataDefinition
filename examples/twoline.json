@@ -1,0 +1,20 @@
+{
+    "title": "One-Line GFX Template",
+    "type": "object",
+    "properties": {
+        "text0": {
+            "description": "Text to be displayed",
+            "type": [
+                "string"
+            ],
+            "maxLength": 50,
+            "gddType": [
+                "single-line"
+            ],
+            "gddOptions": {}
+        }
+    },
+    "required": [
+        "text0"
+    ]
+}

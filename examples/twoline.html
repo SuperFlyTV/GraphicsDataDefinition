@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Two-Line GFX Template</title>
+    <!-- This tag references the metadata -->
+    <meta type="gdd-1.0" src="oneline.json" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        font-size: 3vw;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      .container {
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.5s;
+      }
+      .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #position {
+        position: absolute;
+        bottom: 10vh;
+        left: 10vw;
+      }
+      #text0 {
+        position: relative;
+        background: #5a688a;
+        color: #ffffff;
+
+        box-shadow: 0vw 0.5vw 1vw rgba(0, 0, 0, 0.5);
+      }
+      #text0 > .content {
+        padding: 0.1em 0.5em;
+      }
+      #text1 {
+        position: relative;
+        background: #3d475e;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 75%;
+
+        box-shadow: 0vw 0.5vw 1vw rgba(0, 0, 0, 0.5);
+      }
+      #text1 > .content {
+        padding: 0.1em 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="position">
+      <div id="text0" class="container">
+        <div class="content text"></div>
+      </div>
+      <div id="text1" class="container">
+        <div class="content text"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const text0Container = document.querySelector("#text0");
+      const text0Content = document.querySelector("#text0>.text");
+      const text1Container = document.querySelector("#text1");
+      const text1Content = document.querySelector("#text1>.text");
+      // Initial size:
+      text0Container.style.width = "0";
+      text1Container.style.width = "0";
+
+      function update(data) {
+        text0Content.innerHTML = data.text0;
+        text0Container.style.height = text0Content.offsetHeight + "px";
+        if (data.text1) {
+          text1Content.innerHTML = data.text1;
+          text1Container.style.height = text1Content.offsetHeight + "px";
+        } else {
+          text1Container.style.height = "0";
+        }
+      }
+      function play() {
+        text0Container.style.width = text0Content.offsetWidth + "px";
+        setTimeout(() => {
+          text1Container.style.width = text1Content.offsetWidth + "px";
+        }, 100);
+      }
+      function stop() {
+        text0Container.style.width = "0";
+        text1Container.style.width = "0";
+      }
+      update({ text0: "Hello world!", text1: "I'm alive!" });
+      play();
+      setTimeout(() => {
+        stop();
+      }, 1000);
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    </script>
+  </body>
+</html>

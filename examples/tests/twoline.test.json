@@ -1,0 +1,15 @@
+{
+    "tests": [
+        {
+            "shouldBeValid": true,
+            "data": {
+                "text0": "Hello world!",
+                "text1": "test test!"
+            }
+        },
+        {
+            "shouldBeValid": false,
+            "data": {}
+        }
+    ]
+}

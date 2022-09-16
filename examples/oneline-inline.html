@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>One-Line GFX Template</title>
+    <!-- This tag contains the JSON-schema within the <meta> tag -->
+    <meta type="gdd-1.0" >
+    <![CDATA[
+    {
+      "title": "One-Line GFX Template",
+      "type": "object",
+      "properties": {
+          "text0": {
+              "description": "Text to be displayed",
+              "type": [
+                  "string"
+              ],
+              "maxLength": 50,
+              "gddType": [
+                  "single-line"
+              ],
+              "gddOptions": {}
+          }
+      },
+      "required": [
+          "text0"
+      ]
+    }
+    ]]>
+    </meta>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        font-size: 3vw;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      .container {
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.5s;
+      }
+      .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #text0 {
+        position: absolute;
+        bottom: 10vh;
+        left: 10vw;
+        background: #5a688a;
+        color: #ffffff;
+
+        box-shadow: 0vw 0.5vw 1vw rgba(0, 0, 0, 0.5);
+      }
+      #text0 > .content {
+        padding: 0.1em 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="text0" class="container">
+      <div class="content text"></div>
+    </div>
+
+    <script type="text/javascript">
+      const text0Container = document.querySelector("#text0");
+      const text0Content = document.querySelector("#text0>.text");
+      // Initial size:
+      text0Container.style.width = "0";
+
+      function update(data) {
+        text0Content.innerHTML = data.text0;
+        text0Container.style.height = text0Content.offsetHeight + "px";
+      }
+      function play() {
+        text0Container.style.width = text0Content.offsetWidth + "px";
+      }
+      function stop() {
+        text0Container.style.width = "0";
+      }
+      // update({ text0: "Hello world!" });
+      // play();
+      // setTimeout(() => {
+      //   stop();
+      // }, 1000);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 2000);
+    </script>
+  </body>
+</html>
