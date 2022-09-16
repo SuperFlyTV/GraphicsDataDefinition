@@ -294,6 +294,19 @@ Lets the user pick an image file from disk
 
 Example: `C:\images\myImage.jpg` or `folder/myImage.png`
 
+### Color - RRGGBB
+
+Let's the user pick a color.
+
+```json
+{
+  "type": "string",
+  "gddType": ["rrggbb"]
+}
+```
+
+The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`.
+
 ### Percentage
 
 A number presented as a pecentage
@@ -320,8 +333,6 @@ A duration presented in a human readable format (like "HH:MM:SS.xxx")
 
 The value is stored as a number in milliseconds, eg 1m23s -> `83000`
 
-The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`.
-
 ## For GUI Developers
 
 When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD types - since the GDD types are designed to degrade gracefully.
@@ -341,8 +352,6 @@ function determineComponent(prop) {
     return componentImagePicker(prop, allowOptional);
   if (equals(prop.gddType, ["file-path"]))
     return componentFilePicker(prop, allowOptional);
-  if (equals(prop.gddType, ["rrggbb"]))
-    return componentRRGGBB(prop, allowOptional);
   if (equals(prop.gddType, ["rrggbb"]))
     return componentRRGGBB(prop, allowOptional);
 
