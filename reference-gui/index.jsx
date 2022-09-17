@@ -6,7 +6,7 @@ const exampleSchema = `{
     "properties": {
         "people": {
             "label": "People",
-            "description": "This is a list of people",
+            "description": "This is a list of objects",
             "type": "array",
             "items": {
                 "type": "object",
@@ -27,10 +27,36 @@ const exampleSchema = `{
                         "gddType": [
                             "rrggbb"
                         ]
+                    },
+                    "awake": {
+                      "label": "Awake",
+                      "type": "boolean"
+                    },
+                    "complicated": {
+                      "label": "Complicated",
+                      "description": "This is an object within an object",
+                      "type": "object",
+                      "properties": {
+                        "prop1": {
+                          "type": "string"
+                        },
+                        "prop2": {
+                          "type": "string"
+                        }
+
+                      }
                     }
                 }
             }
-        }
+        },
+        "Cities": {
+          "label": "Cities",
+          "description": "This is an array of strings",
+          "type": "array",
+          "items": {
+              "type": "string"
+          }
+      }
     },
     "required": [
         "people"
@@ -44,13 +70,19 @@ const exampleData = {
       age: 33,
       favoriteColor: "#3333dd",
     },
+    {
+      name: "Ivan",
+      age: 27,
+      favoriteColor: "#ff3355",
+    },
   ],
 };
+const initialSchema = localStorage.getItem("schema") || exampleSchema;
 const App = () => {
-  const [schema, setSchema] = React.useState(exampleSchema);
+  const [schema, setSchema] = React.useState(initialSchema);
   const [data, setData] = React.useState(exampleData);
 
-  const setDataWrap = (d) => {
+  const onDataSave = (d) => {
     setData(JSON.parse(JSON.stringify(d)));
   };
 
@@ -58,14 +90,19 @@ const App = () => {
     <div>
       <div className="schema-input">
         <textarea
+          rows={15}
+          cols={100}
           onChange={(event) => {
-            setSchema(event.target.value);
+            const newSchema = event.target.value;
+            setSchema(newSchema);
+
+            localStorage.setItem("schema", newSchema);
           }}
           value={schema}
         />
       </div>
-      <div className="schema-gui">
-        <GUI schema={schema} data={data} setData={setDataWrap} />
+      <div className="gdd-gui">
+        <GDDGUI schema={schema} data={data} setData={onDataSave} />
       </div>
       <div className="output-data">
         <pre>{JSON.stringify(data, undefined, 2)}</pre>
@@ -74,7 +111,7 @@ const App = () => {
   );
 };
 
-const GUI = (props) => {
+const GDDGUI = (props) => {
   let schema;
   try {
     schema = JSON.parse(props.schema);
@@ -82,164 +119,243 @@ const GUI = (props) => {
     return `There was an error parsing the schema: ${err}`;
   }
 
-  return componentAny("root", schema, props.data, props.setData);
+  return componentAny({
+    property: "",
+    schema: schema,
+    data: props.data,
+    setData: props.setData,
+  });
+};
+const getBasicType = (schemaType) => {
+  return Array.isArray(schemaType) ? schemaType[0] : schemaType;
+};
+const componentAny = (props) => {
+  if (!props.schema) return "null";
+  const basicType = getBasicType(props.schema.type);
+
+  props.key = props.property;
+
+  if (basicType === "boolean") return propertyBoolean(props);
+  if (basicType === "string") return propertyString(props);
+  if (basicType === "number") return propertyNumber(props);
+  if (basicType === "integer") return propertyInteger(props);
+  if (basicType === "array") return propertyArray(props);
+  if (basicType === "object") return propertyObject(props);
+
+  return propertyUnknown(props, basicType);
 };
 
-const componentAny = (key, content, data, setData) => {
-  if (!content) return "null";
-  const basicType = Array.isArray(content.type)
-    ? content.type[0]
-    : content.type;
-  const allowOptional = Array.isArray(content.type)
-    ? content.type[1] === "null"
-    : false;
+const EditProperty = (props) => {
+  const label = props.schema.label || props.property;
+  const description = props.schema.description;
 
-  if (basicType === "boolean")
-    return componentBoolean(key, content, allowOptional, data, setData);
-  if (basicType === "string")
-    return componentString(key, content, allowOptional, data, setData);
-  if (basicType === "number")
-    return componentNumber(key, content, allowOptional, data, setData);
-  if (basicType === "integer")
-    return componentInteger(key, content, allowOptional, data, setData);
-  if (basicType === "array")
-    return componentArray(key, content, allowOptional, data, setData);
-  if (basicType === "object")
-    return componentObject(key, content, allowOptional, data, setData);
-
-  return `Unknown type "${basicType}"`;
-};
-
-const componentBoolean = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
-
-  return (
-    <div className="gui-boolean">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
-
-      <div className="edit">
-        <input type="checkbox" checked={data} />
+  if (props.inTableRow || props.inTableCell) {
+    return (
+      <td>
+        <div className={"gdd-property gdd-property-" + props.className}>
+          <div className="edit">{props.children}</div>
+        </div>
+      </td>
+    );
+  } else {
+    return (
+      <div className={"gdd-property gdd-property-" + props.className}>
+        <div className="label">{label}</div>
+        {description && <div className="description">{description}</div>}
+        <div className="edit">{props.children}</div>
       </div>
-    </div>
+    );
+  }
+};
+
+const propertyUnknown = (props, basicType) => {
+  return (
+    <EditProperty className="boolean" {...props}>
+      Unknown type "{props.basicType}"
+    </EditProperty>
   );
 };
-const componentString = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
-
+const propertyBoolean = (props) => {
+  const data = !!props.data;
   return (
-    <div className="gui-boolean">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
-
-      <div className="edit">
-        <input
-          type="text"
-          value={data}
-          onChange={(e) => {
-            setData(e.target.value);
-          }}
-        />
-      </div>
-    </div>
+    <EditProperty className="boolean" {...props}>
+      <input
+        type="checkbox"
+        checked={data}
+        onChange={(e) => {
+          props.setData(e.target.checked);
+        }}
+      />
+    </EditProperty>
   );
 };
-const componentNumber = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
-
+const propertyString = (props) => {
+  const data = props.data || "";
   return (
-    <div className="gui-number">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
-
-      <div className="edit">
-        <input
-          type="number"
-          value={data}
-          onChange={(e) => {
-            setData(parseFloat(e.target.value));
-          }}
-        />
-      </div>
-    </div>
+    <EditProperty className="string" {...props}>
+      <input
+        type="text"
+        value={data}
+        onChange={(e) => {
+          props.setData(e.target.value);
+        }}
+      />
+    </EditProperty>
   );
 };
-const componentInteger = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
-
+const propertyNumber = (props) => {
+  const data = props.data || "";
   return (
-    <div className="gui-integer">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
-
-      <div className="edit">
-        <input
-          type="number"
-          value={data}
-          onChange={(e) => {
-            setData(parseInt(e.target.value));
-          }}
-        />
-      </div>
-    </div>
+    <EditProperty className="number" {...props}>
+      <input
+        type="number"
+        value={data}
+        onChange={(e) => {
+          props.setData(parseFloat(e.target.value));
+        }}
+      />
+    </EditProperty>
   );
 };
-const componentArray = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
+const propertyInteger = (props) => {
+  const data = props.data || "";
+  return (
+    <EditProperty className="integer" {...props}>
+      <input
+        type="number"
+        value={data}
+        onChange={(e) => {
+          props.setData(parseInt(e.target.value));
+        }}
+      />
+    </EditProperty>
+  );
+};
+const propertyArray = (props) => {
+  let data = props.data;
+  if (!Array.isArray(data)) data = [];
+
+  let columns = [];
+  if (props.schema.items.type === "object") {
+    columns = Object.entries(props.schema.items.properties);
+  } else {
+    columns = [["", props.schema.items]];
+  }
 
   return (
-    <div className="gui-array">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
+    <EditProperty className="array" {...props}>
+      <table>
+        <thead>
+          <tr>
+            {columns.map(([columnKey, column]) => {
+              return (
+                <th className="header" key={columnKey}>
+                  <div className="label">{column.label || columnKey}</div>
+                  {column.description && (
+                    <div className="description">{column.description}</div>
+                  )}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((itemData, index) => {
+            const itemSetData = (d) => {
+              data[index] = d;
+              props.setData(data);
+            };
 
-      <div className="items">
-        {(data || []).map((itemData, index) => {
-          const itemSetData = (d) => {
-            data[index] = d;
-            setData(data);
-          };
-          return (
-            <div key={index}>
-              {componentAny(index, content.items, itemData, itemSetData)}
-            </div>
-          );
-        })}
-      </div>
-    </div>
+            return (
+              <tr className="item" key={index}>
+                {componentAny({
+                  property: index,
+                  schema: props.schema.items,
+                  data: itemData,
+                  setData: itemSetData,
+                  inTableRow: true,
+                })}
+                <td>
+                  <button
+                    className="delete"
+                    onClick={() => {
+                      data.splice(index, 1);
+                      props.setData(data);
+                    }}
+                  >
+                    🗑
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+          <tr>
+            <td colSpan="99">
+              <button
+                className="add"
+                onClick={() => {
+                  data.push(null);
+                  props.setData(data);
+                }}
+              >
+                +
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </EditProperty>
   );
 };
 
-const componentObject = (key, content, allowOptional, data, setData) => {
-  const label = content.label || key;
-  const description = content.description;
+const propertyObject = (props) => {
+  let data = props.data || {};
+  if (typeof data !== "object" || Array.isArray(data)) data = {};
 
-  return (
-    <div className="gui-object">
-      <div className="label">{label}</div>
-      {description && <div className="description">{description}</div>}
+  const properties = props.schema.properties || {};
 
-      <div className="properties">
-        {Object.entries(content.properties).map(([propKey, prop]) => {
-          const propData = data[propKey];
-          const propSetData = (d) => {
-            data[propKey] = d;
-            setData(data);
-          };
+  if (props.inTableRow) {
+    return Object.entries(properties).map(([subProperty, subSchema]) => {
+      const propData = data[subProperty];
+      const propSetData = (d) => {
+        data[subProperty] = d;
+        props.setData(data);
+      };
 
-          return (
-            <div key={propKey}>
-              {componentAny(propKey, prop, propData, propSetData)}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+      return componentAny({
+        property: subProperty,
+        schema: subSchema,
+        data: propData,
+        setData: propSetData,
+        inTableCell: true,
+      });
+    });
+  } else {
+    return (
+      <EditProperty className="object" {...props}>
+        <div className="properties">
+          {Object.entries(properties).map(([subProperty, subSchema]) => {
+            const propData = data[subProperty];
+            const propSetData = (d) => {
+              data[subProperty] = d;
+              props.setData(data);
+            };
+
+            return (
+              <div className="property" key={subProperty}>
+                {componentAny({
+                  property: subProperty,
+                  schema: subSchema,
+                  data: propData,
+                  setData: propSetData,
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </EditProperty>
+    );
+  }
 };
 
 root.render(<App />);
