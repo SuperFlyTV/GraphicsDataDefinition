@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { GDDGUI } from "./gdd-gui";
+import { examples } from "./examples";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
