@@ -16,6 +16,8 @@ _Everything in this document is subject to change and should be considered a pro
 
 The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file.
 
+**[A live demo of a Reference GUI can be found here!](https://superflytv.github.io/GraphicsDataDefinition/reference-gui/dist/)**
+
 **HTML Graphics file, "example.html":**
 
 The `<meta>` tag refers to a JSON-file that contains the GDD Schema definitions.
