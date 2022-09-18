@@ -335,6 +335,42 @@ A duration presented in a human readable format (like "HH:MM:SS.xxx")
 
 The value is stored as a number in milliseconds, eg 1m23s -> `83000`
 
+## Live Data Definition interrogation
+
+To allow for various host applications to be able to interrogate the Graphics Data Definition for a given template,
+the GDD object should be exposed as a JavaScript object on the DOM `window` object under `graphicsDataDefinition`
+key as soon as possible. This can be done by injecting the following JavaScript code into the template HTML:
+
+```html
+<script>
+  const metaTag = document.head.querySelector('meta[name="graphics-data-definition"]')
+  if (metaTag) {
+    if (metaTag.attributes.src) {
+      fetch(metaTag.attributes.src)
+        .then((res) => {
+          if (!res.ok) throw new Error(`Could not download Graphics Data Definition schema: ${res.status}`);
+          return res.json();
+        })
+        .then((schemaObject) => {
+          window.graphicsDataDefinition = schemaObject;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else if (metaTag.innerText) {
+      try {
+        const schemaObject = JSON.parse(metaTag.innerText);
+        window.graphicsDataDefinition = schemaObject;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.warn(`Graphics Data Definition not found in this template`);
+    }
+  }
+</script>
+```
+
 ## For GUI Developers
 
 When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD types - since the GDD types are designed to degrade gracefully.
