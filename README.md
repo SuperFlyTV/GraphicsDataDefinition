@@ -21,14 +21,13 @@ The GDD Schema can either be defined in a separate JSON-file, or inline in the H
 **HTML Graphics file, "example.html":**
 
 The `<meta>` tag refers to a JSON-file that contains the GDD Schema definitions.
-The `src=""` path can either be a file path (relative to the html-file's location)
-or a URL.
+The `src=""` attribute can contain either a relative or an absolute URL.
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta type="gdd-1.0" src="example.json" />
+    <meta name="graphics-template-definition" type="application/json+gdd" src="example.json" />
   </head>
   <body>
     *** Content goes here ***
@@ -64,7 +63,7 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta type="gdd-1.0" >
+    <meta name="graphics-template-definition" type="application/json+gdd">
     <![CDATA[
       {
         "title": "One-Line GFX Template",
@@ -92,7 +91,7 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
 
 ## General Definition
 
-The GDD is a superset of the [JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#name-a-vocabulary-for-structural), with a few exceptions, see below.
+The GDD is a subset of the [JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#name-a-vocabulary-for-structural), with a few exceptions, see below.
 
 It supports all the basic JSON types (such as strings and numbers) but also extends them with **GDD Types**,
 which can be used by _Graphics client GUIs_ to auto-generate input forms for the data.
@@ -101,7 +100,7 @@ All **GDD Types** are designed to gracefully degrade in case the GUI can't handl
 One example is the `["string", "RRGGBB"]` type which (when supported) can provide a color-picker in the GUI,
 but if not supported will gracefully degrade to a simple text input.
 
-The GUI:s are expected to validate the form-data before submitting it to the GFX Clients.
+The GUIs are expected to validate the form-data before submitting it to the GFX Clients.
 Examples of how to validate can be found here: _---TODO---_
 
 ### Schema
@@ -156,7 +155,7 @@ To reduce the complexity for the GDD GUI implementation however, the valid value
 
 Here follows a list of the basic JSON types supported in GDD.
 
-_All of these types are supported by all GUI:s_
+_All of these types are supported by all GUIs_
 
 ### Boolean
 
@@ -231,9 +230,9 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 
 ## GDD Types
 
-Here follows a list of the GDD Types, which provides more advanced functionality in GUI:s.
+Here follows a list of the GDD Types, which provides more advanced functionality in GUIs.
 
-_Not all of these types are supported by all GUI:s. If a type is not supported,
+_Not all of these types are supported by all GUIs. If a type is not supported,
 the GUI will degrade gracefully to the next_
 
 Note: All `type`-properties below can be defined as optional by defining it as `["myType", "null"]`.
@@ -320,11 +319,11 @@ A number presented as a pecentage
 }
 ```
 
-The value is stored as a number, eg 25% -> 0.25
+The value is stored as a number, eg "25%" -> 0.25
 
 ### Duration in milliseconds
 
-A duration presented in a human readable format (like "HH:MM:SS.xxx")
+A duration value, to be presented in a human readable format (like "HH:MM:SS.xxx")
 
 ```json
 {
@@ -333,7 +332,7 @@ A duration presented in a human readable format (like "HH:MM:SS.xxx")
 }
 ```
 
-The value is stored as a number in milliseconds, eg 1m23s -> `83000`
+The value is stored as a number in milliseconds, eg "1m23s" -> `83000`
 
 ## For GUI Developers
 
