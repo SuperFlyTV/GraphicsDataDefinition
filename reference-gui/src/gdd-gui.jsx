@@ -1,117 +1,9 @@
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import React from "react";
 
-const exampleSchema = `{
-    "title": "Table GFX Template",
-    "type": "object",
-    "properties": {
-        "people": {
-            "label": "People",
-            "description": "This is a list of objects",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "label": "Name",
-                        "description": "Name of the person",
-                        "type": "string"
-                    },
-                    "age": {
-                        "label": "Age",
-                        "description": "Age, in years",
-                        "type": "integer"
-                    },
-                    "favoriteColor": {
-                        "label": "Favorite Color",
-                        "type": "string",
-                        "gddType": [
-                            "rrggbb"
-                        ]
-                    },
-                    "awake": {
-                      "label": "Awake",
-                      "type": "boolean"
-                    },
-                    "complicated": {
-                      "label": "Complicated",
-                      "description": "This is an object within an object",
-                      "type": "object",
-                      "properties": {
-                        "prop1": {
-                          "type": "string"
-                        },
-                        "prop2": {
-                          "type": "string"
-                        }
+import { validateData } from "./gdd/data";
+import { validateSchema } from "./gdd/schema-validate";
 
-                      }
-                    }
-                }
-            }
-        },
-        "Cities": {
-          "label": "Cities",
-          "description": "This is an array of strings",
-          "type": "array",
-          "items": {
-              "type": "string"
-          }
-      }
-    },
-    "required": [
-        "people"
-    ]
-}
-`;
-const exampleData = {
-  people: [
-    {
-      name: "Johan",
-      age: 33,
-      favoriteColor: "#3333dd",
-    },
-    {
-      name: "Ivan",
-      age: 27,
-      favoriteColor: "#ff3355",
-    },
-  ],
-};
-const initialSchema = localStorage.getItem("schema") || exampleSchema;
-const App = () => {
-  const [schema, setSchema] = React.useState(initialSchema);
-  const [data, setData] = React.useState(exampleData);
-
-  const onDataSave = (d) => {
-    setData(JSON.parse(JSON.stringify(d)));
-  };
-
-  return (
-    <div>
-      <div className="schema-input">
-        <textarea
-          rows={15}
-          cols={100}
-          onChange={(event) => {
-            const newSchema = event.target.value;
-            setSchema(newSchema);
-
-            localStorage.setItem("schema", newSchema);
-          }}
-          value={schema}
-        />
-      </div>
-      <div className="gdd-gui">
-        <GDDGUI schema={schema} data={data} setData={onDataSave} />
-      </div>
-      <div className="output-data">
-        <pre>{JSON.stringify(data, undefined, 2)}</pre>
-      </div>
-    </div>
-  );
-};
-
-const GDDGUI = (props) => {
+export const GDDGUI = (props) => {
   let schema;
   try {
     schema = JSON.parse(props.schema);
@@ -119,11 +11,21 @@ const GDDGUI = (props) => {
     return `There was an error parsing the schema: ${err}`;
   }
 
+  try {
+    validateSchema(schema);
+  } catch (err) {
+    return `${err}`;
+  }
+
+  const setData = (data) => {
+    props.setData(data);
+  };
+
   return componentAny({
     property: "",
     schema: schema,
     data: props.data,
-    setData: props.setData,
+    setData: setData,
   });
 };
 const getBasicType = (schemaType) => {
@@ -134,6 +36,8 @@ const componentAny = (props) => {
   const basicType = getBasicType(props.schema.type);
 
   props.key = props.property;
+
+  props.dataValidation = validateData(props.schema, props.data);
 
   if (basicType === "boolean") return propertyBoolean(props);
   if (basicType === "string") return propertyString(props);
@@ -163,6 +67,9 @@ const EditProperty = (props) => {
         <div className="label">{label}</div>
         {description && <div className="description">{description}</div>}
         <div className="edit">{props.children}</div>
+        {props.dataValidation && (
+          <div className="data-validation">{props.dataValidation}</div>
+        )}
       </div>
     );
   }
@@ -242,6 +149,15 @@ const propertyArray = (props) => {
     columns = [["", props.schema.items]];
   }
 
+  let emptyChild = null;
+  if (props.schema.items.type === "object") {
+    emptyChild = {};
+  } else if (props.schema.items.type === "array") {
+    emptyChild = [];
+  } else if (props.schema.items.type === "string") {
+    emptyChild = "";
+  }
+
   return (
     <EditProperty className="array" {...props}>
       <table>
@@ -294,7 +210,7 @@ const propertyArray = (props) => {
               <button
                 className="add"
                 onClick={() => {
-                  data.push(null);
+                  data.push(emptyChild);
                   props.setData(data);
                 }}
               >
@@ -357,5 +273,3 @@ const propertyObject = (props) => {
     );
   }
 };
-
-root.render(<App />);
