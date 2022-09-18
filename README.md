@@ -27,7 +27,7 @@ The `src=""` attribute can contain either a relative or an absolute URL.
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="graphics-template-definition" type="application/json+gdd" src="example.json" />
+    <meta name="graphics-data-definition" type="application/json+gdd" src="example.json" />
   </head>
   <body>
     *** Content goes here ***
@@ -63,7 +63,7 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="graphics-template-definition" type="application/json+gdd">
+    <meta name="graphics-data-definition" type="application/json+gdd">
     <![CDATA[
       {
         "title": "One-Line GFX Template",
