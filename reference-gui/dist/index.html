@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reference GUI</title>
+
+    <style>
+      body {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      }
+      .gdd-gui {
+       display: block;
+       border: 1px solid grey;
+       border-radius: 0.5em;
+       padding: 0.5em;
+      }
+      .label {
+        font-weight: bold;
+      }
+      .description {
+        font-weight: normal;
+        font-style: italic;
+        font-size: 80%;
+      }
+      .gdd-property {
+        margin: 0.1em;
+      }
+      .gdd-property-array>.items {
+        display: flex;
+        flex-direction: column;
+      }
+      .gdd-property-array table td {
+        vertical-align: top;
+      }
+      .gdd-property-object {
+        border: 1px solid grey;
+        border-radius: 0.5em;
+        padding: 0.5em;
+        box-shadow: 0px 2px 10px rgba(0,0,0, 0.2);
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/javascript">
+        setTimeout(() => {
+          // location.reload();
+        }, 1000 * 2);
+    </script>
+
+    <!--
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel" src="index.jsx?a=0"></script>-->
+    <script type="text/javascript" src="dist/main.js"></script>
+  </body>
+</html>
