@@ -6,11 +6,11 @@ _Everything in this document is subject to change and should be considered a pro
 
 **Table of contents**
 
-- [Gettings started](#Getting+started)
-- [General Definition](#General+Definition)
-- [Basic Types](#Basic+Types)
-- [GDD Types](#GDD+Types)
-- [For GUI Developers](#For+GUI+Developers)
+- [Gettings started](#getting-started)
+- [General Definition](#general-definition)
+- [Basic Types](#basic-types)
+- [GDD Types](#gdd-types)
+- [For GUI Developers](#for-gui-developers)
 
 ## Getting started
 
