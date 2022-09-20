@@ -278,7 +278,7 @@ Lets the user pick a file from disk
 }
 ```
 
-Example: `C:\images\myFile.xml` or `folder/myFile.zip`
+Example: `"C:\images\myFile.xml"` or `"folder/myFile.zip"`
 
 ### Image File path
 
@@ -294,7 +294,45 @@ Lets the user pick an image file from disk
 }
 ```
 
-Example: `C:\images\myImage.jpg` or `folder/myImage.png`
+Example: `"C:\images\myImage.jpg"` or `"folder/myImage.png"`
+
+### String and Number select
+
+Lets the user select from a limited number of options
+
+```json
+{
+  "type": "string",
+  "enum": ["one", "two", "three"],
+  "gddType": ["select"],
+  "gddOptions": {
+    "labels": {
+      "one": "Label for one",
+      "two": "Label for two",
+      "three": "Label for three",
+    }
+  }
+}
+```
+
+Or
+
+```json
+{
+  "type": "number",
+  "enum": [1.2, 3.5, 9.0],
+  "gddType": ["select"],
+  "gddOptions": {
+    "labels": {
+      "1.2": "Small",
+      "3.5": "Medium",
+      "9.0": "Large",
+    }
+  }
+}
+```
+
+Example: `"one"` or `1.2`
 
 ### Color - RRGGBB
 
