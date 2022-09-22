@@ -46,7 +46,7 @@ export async function retrieveGDDSchema(htmlFilePath) {
 
 /**
  * Extracts the path to the GDD JSON file from a HTML file, looking for the tag:
- * <meta type="gdd-1.0" src="path-to-json-file" />
+ * <meta name="graphics-data-definition" src="path-to-json-file" />
  * @param string htmlString
  * @returns The path to the JSON file.
  */
@@ -65,36 +65,43 @@ function extractGDDJSONPath(htmlString) {
 
     return srcContent
 }
-const exampleMetaTag = '<meta type="gdd-1.0" src="path-to-json-file" />'
+const exampleMetaTag = '<meta name="graphics-data-definition" src="path-to-json-file" />'
 
 /**
  * Extracts a GDD JSON schema from a HTML file
- * <meta type="gdd-1.0">
- * <![CDATA[
+ *
+ * <meta name="graphics-data-definition" content=""
  * { ***The schema*** }
- * ]]>
+ * ">
  * </meta>
  * @param string htmlString
  * @returns The path to the JSON file.
  */
 function extractGDDJSONFromHTMLFile(htmlString) {
-    const match = htmlString.match(/<meta[\S\s]*>[\S\s]*<!\[CDATA\[\s*((?:.(?<!\]\]>)\s*)*)\]\]>[\S\s]*<\/meta>/)
-    if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTagWithContent}`)
 
-    // console.log(match)
+
+
+    // Matches CDATA:
+    // const match = htmlString.match(/<meta[\S\s]*>[\S\s]*<!\[CDATA\[\s*((?:.(?<!\]\]>)\s*)*)\]\]>[\S\s]*<\/meta>/)
+    // if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTagWithContent}`)
+
+
+    const match = (
+        // Matches: <meta name="graphics-data-definition" content=''>
+        htmlString.match(/<meta[^>]*name=["']graphics-data-definition["'][^>]*content='(([^']|\\')+)'\/?>/) ||
+        // Matches: <meta name="graphics-data-definition" content="">
+        htmlString.match(/<meta[^>]*name=["']graphics-data-definition["'][^>]*content="(([^"]|\\")+)"\/?>/)
+    )
+    if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTagWithContent}`)
 
     const srcContent = match[1] || null
 
-
     return srcContent
 }
-const exampleMetaTagWithContent = `<meta type="gdd-1.0">
-<![CDATA[
-{
+const exampleMetaTagWithContent = `<meta name="graphics-data-definition" content='{
     *** GDD Schema ***
-}
-]]>
-</meta>`
+}'>
+`
 
 export function validateSchema(schema) {
 

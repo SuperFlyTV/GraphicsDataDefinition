@@ -63,8 +63,7 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="graphics-data-definition" type="application/json+gdd">
-    <![CDATA[
+    <meta name="graphics-data-definition" type="application/json+gdd" content='
       {
         "title": "One-Line GFX Template",
         "type": "object",
@@ -74,8 +73,7 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
           }
         },
       }
-    ]]>
-    </meta>
+    '>
   </head>
   <body>
     *** Content goes here ***
