@@ -19,3 +19,33 @@ export function validateData(GDDSchema, data) {
 
     return null
 }
+export function getDefaultDataFromSchema(GDDSchema, prefilledData, key) {
+    // Note: this function assumes that the schema provided has been validated by validateSchema()
+
+    if (GDDSchema.type === 'object') {
+        const dataObject = clone(prefilledData ?? GDDSchema.default ?? {})
+        for (const [subKey, subSchema] of Object.entries(GDDSchema.properties)) {
+            const subData = getDefaultDataFromSchema(subSchema, dataObject[subKey], key + '.' + subKey)
+            if (subData !== undefined) dataObject[subKey] = subData
+        }
+        return dataObject
+    } else if (GDDSchema.type === 'array') {
+        const dataArray = clone(prefilledData ?? GDDSchema.default ?? [])
+        for (let index = 0; index < dataArray.length; index++) {
+            dataArray[index] = getDefaultDataFromSchema(GDDSchema.items, dataArray[index], key + `[${index}]`)
+        }
+        return dataArray
+    } else {
+        const data = prefilledData ?? GDDSchema.default ?? undefined
+        if (data !== undefined) return data
+
+        // Fallback to default values:
+        if (GDDSchema.type === "boolean") return false
+        if (GDDSchema.type === "string") return ""
+        if (GDDSchema.type === "number") return 0
+        if (GDDSchema.type === "integer") return 0
+    }
+}
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj))
+}

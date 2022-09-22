@@ -2,23 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { GDDGUI } from "./gdd-gui";
 import { examples } from "./examples";
+import { getDefaultDataFromSchema } from "./gdd/data";
+import { validateSchema } from "./gdd/schema-validate";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const initialSchema =
-  localStorage.getItem("schema") ||
-  JSON.stringify(examples[0].schema, undefined, 2);
-const initialDataStr =
-  localStorage.getItem("data") ||
-  JSON.stringify(examples[0].data, undefined, 2);
+const initialSchemaStr =
+  localStorage.getItem("schema") || JSON.stringify(examples[0], undefined, 2);
 let initialData;
 try {
-  initialData = JSON.parse(initialDataStr);
+  const initialSchema = JSON.parse(initialSchemaStr);
+  validateSchema(initialSchema);
+  initialData = getDefaultDataFromSchema(initialSchema);
 } catch (err) {
+  console.log(initialSchemaStr);
+  console.error("Error in initial schema", err);
   initialData = {};
 }
 const App = () => {
-  const [schema, setSchema] = React.useState(initialSchema);
+  const [schema, setSchema] = React.useState(initialSchemaStr);
   const [data, setData] = React.useState(initialData);
 
   const onDataSave = (d) => {
@@ -26,22 +28,30 @@ const App = () => {
     setData(JSON.parse(dataStr));
     localStorage.setItem("data", dataStr);
   };
+  const switchToExampleSchema = (schema) => {
+    setSchema(JSON.stringify(schema, undefined, 2));
+
+    try {
+      validateSchema(schema);
+      setData(getDefaultDataFromSchema(schema));
+    } catch (err) {
+      setData({});
+    }
+  };
 
   return (
     <div>
       <div className="select-examples">
         <button
           onClick={() => {
-            setSchema(JSON.stringify(examples[0].schema, undefined, 2));
-            setData(examples[0].data);
+            switchToExampleSchema(examples[0]);
           }}
         >
           Reset to Example: Simple f0, f1
         </button>
         <button
           onClick={() => {
-            setSchema(JSON.stringify(examples[1].schema, undefined, 2));
-            setData(examples[1].data);
+            switchToExampleSchema(examples[1]);
           }}
         >
           Reset to Example: Advanced table

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { validateData } from "./gdd/data";
+import { validateData, getDefaultDataFromSchema } from "./gdd/data";
 import { validateSchema } from "./gdd/schema-validate";
 
 export const GDDGUI = (props) => {
@@ -149,15 +149,6 @@ const propertyArray = (props) => {
     columns = [["", props.schema.items]];
   }
 
-  let emptyChild = null;
-  if (props.schema.items.type === "object") {
-    emptyChild = {};
-  } else if (props.schema.items.type === "array") {
-    emptyChild = [];
-  } else if (props.schema.items.type === "string") {
-    emptyChild = "";
-  }
-
   return (
     <EditProperty className="array" {...props}>
       <table>
@@ -210,7 +201,9 @@ const propertyArray = (props) => {
               <button
                 className="add"
                 onClick={() => {
-                  data.push(emptyChild);
+                  data.push(
+                    getDefaultDataFromSchema(props.schema.items) ?? null
+                  );
                   props.setData(data);
                 }}
               >
