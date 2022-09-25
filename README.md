@@ -20,18 +20,18 @@ The GDD Schema can either be defined in a separate JSON-file, or inline in the H
 
 **HTML Graphics file, "example.html":**
 
-The `<meta>` tag refers to a JSON-file that contains the GDD Schema definitions.
-The `src=""` attribute can contain either a relative or an absolute URL.
+The `<script name="graphics-data-definition">` tag refers to a JSON-file that contains the GDD Schema definitions.
+The `src=""` is a relative URL to the Schema json file.
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta
+    <script
       name="graphics-data-definition"
       type="application/json+gdd"
       src="example.json"
-    />
+    ></script>
   </head>
   <body>
     *** Content goes here ***
@@ -49,39 +49,47 @@ The `src=""` attribute can contain either a relative or an absolute URL.
     "text0": {
       "description": "Text content",
       "type": "string",
+      "maxLength": 50,
       "gddType": "single-line",
-      "gddOptions": {
-        "maxLength": 50
-      }
+      "gddOptions": {}
     }
-  },
-  "required": ["text0"]
+  }
 }
 ```
 
 **HTML Graphics file, "example-inline.html":**
 
-The `<meta>` tag can also contain the GDD Schema definitions inline:
+The `<script name="graphics-data-definition">` tag can also contain the GDD Schema definitions inline:
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta
-      name="graphics-data-definition"
-      type="application/json+gdd"
-      content='
+    <script name="graphics-data-definition" type="application/json+gdd">
       {
         "title": "One-Line GFX Template",
         "type": "object",
         "properties": {
           "text0": {
+            "description": "Text content",
             "type": "string",
+            "maxLength": 50,
+            "gddType": "single-line",
+            "gddOptions": {
+
+            }
           }
         },
       }
-    '
-    />
+    </script>
+    <script type="text/javascript">
+      // This is optional, but often helpful.
+      // Expose the gddSchema globally:
+      window.gddSchema = JSON.parse(
+        document.querySelector('head > script[name="graphics-data-definition"]')
+          .innerHTML
+      );
+    </script>
   </head>
   <body>
     *** Content goes here ***

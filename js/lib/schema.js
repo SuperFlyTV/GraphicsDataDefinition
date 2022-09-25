@@ -12,8 +12,10 @@ export async function retrieveGDDSchema(htmlFilePath) {
 
     if (typeof htmlContent !== 'string')
         throw new Error(`Bad input data, must be a string (was "${typeof htmlContent}")`)
-    const match = htmlContent.match(/<meta([\S\s]*)>/)
-    if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTag}`)
+
+    // Look for <script name="graphics-data-definition">:
+    const match = htmlContent.match(/<script([\S\s]*)name=["']graphics-data-definition['"]/)
+    if (!match) throw new Error(`Did not find any <script name="graphics-data-definition"> tag, did you forget to add it?\n${exampleSchemaTag}`)
 
     const srcPath = extractGDDJSONPath(htmlContent)
     if (srcPath) {
@@ -46,62 +48,51 @@ export async function retrieveGDDSchema(htmlFilePath) {
 
 /**
  * Extracts the path to the GDD JSON file from a HTML file, looking for the tag:
- * <meta name="graphics-data-definition" src="path-to-json-file" />
+ * <script name="graphics-data-definition" type="application/json+gdd" src="path-to-json-file">
  * @param string htmlString
  * @returns The path to the JSON file.
  */
 function extractGDDJSONPath(htmlString) {
-    const match = htmlString.match(/<meta([\S\s]*)\/>/)
+    const match = htmlString.match(/<script([\S\s]*?name=["']graphics-data-definition['"][\S\s]*?)>/)
     if (!match) return null
 
-    const metaContent = match[0].trim()
-    if (!metaContent) throw new Error(`Meta tag is empty, it should be on this form:\n${exampleMetaTag}`)
+    const tagContent = match[0].trim()
+    if (!tagContent) throw new Error(`<script> tag is empty, it should be on this form:\n${exampleSchemaTag}`)
 
-    const srcMatch = metaContent.match(/src="([^"]*)"/)
-    if (!srcMatch) throw new Error(`src property is missing in <meta> tag, it should be on this form:\n${exampleMetaTag}`)
+    const srcMatch = tagContent.match(/src="([^"]*)"/) || tagContent.match(/src='([^']*)'/)
+    if (!srcMatch) return null
+    // if (!srcMatch) throw new Error(`src property is missing in <script> tag, it should be on this form:\n${exampleSchemaTag}`)
 
     const srcContent = srcMatch[1] || null
     // if (!srcContent) throw new Error(`src property is empty, it should be on this form:\n${exampleMetaTag}`)
 
     return srcContent
 }
-const exampleMetaTag = '<meta name="graphics-data-definition" src="path-to-json-file" />'
+const exampleSchemaTag = ' <script name="graphics-data-definition" type="application/json+gdd" src="path-to-json-file"></script>'
 
 /**
  * Extracts a GDD JSON schema from a HTML file
  *
- * <meta name="graphics-data-definition" content=""
+ * <script name="graphics-data-definition" type="application/json+gdd">
  * { ***The schema*** }
- * ">
- * </meta>
+ * </script>
  * @param string htmlString
  * @returns The path to the JSON file.
  */
 function extractGDDJSONFromHTMLFile(htmlString) {
-
-
-
-    // Matches CDATA:
-    // const match = htmlString.match(/<meta[\S\s]*>[\S\s]*<!\[CDATA\[\s*((?:.(?<!\]\]>)\s*)*)\]\]>[\S\s]*<\/meta>/)
-    // if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTagWithContent}`)
-
-
     const match = (
-        // Matches: <meta name="graphics-data-definition" content=''>
-        htmlString.match(/<meta[^>]*name=["']graphics-data-definition["'][^>]*content='(([^']|\\')+)'\/?>/) ||
-        // Matches: <meta name="graphics-data-definition" content="">
-        htmlString.match(/<meta[^>]*name=["']graphics-data-definition["'][^>]*content="(([^"]|\\")+)"\/?>/)
+        // Matches: <script name="graphics-data-definition" type="application/json+gdd" >CONTENT</script>
+        htmlString.match(/<script [\S\s]*?name=["']graphics-data-definition['"][\S\s]*?>([\s\S]*?)<\/script>/)
     )
-    if (!match) throw new Error(`Did not find any <meta> tag, did you forget to add it?\n${exampleMetaTagWithContent}`)
+    if (!match) throw new Error(`Did not find any <script> tag, did you forget to add it?\n${exampleSchemaTagWithContent}`)
 
     const srcContent = match[1] || null
 
     return srcContent
 }
-const exampleMetaTagWithContent = `<meta name="graphics-data-definition" content='{
-    *** GDD Schema ***
-}'>
-`
+const exampleSchemaTagWithContent = `<script name="graphics-data-definition" type="application/json+gdd">
+*** GDD Schema ***
+</script>`
 
 export function validateSchema(schema) {
 

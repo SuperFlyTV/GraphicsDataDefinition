@@ -53,7 +53,7 @@ function validateProperty(property, key) {
     );
 
   if (property.gddType) {
-    if (property.gddType !== "string")
-      throw new Error(`${key}: Property "gddType" must be a string`);
+    if (typeof property.gddType !== "string")
+      throw new Error(`${key}: Property "gddType" must be a string (is a ${typeof property.gddType})`);
   }
 }

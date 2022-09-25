@@ -18,11 +18,11 @@ async function validateAllExampleFiles() {
   for (const htmlFileName of htmlFiles) {
     const filePath = path.join(examplesFolder, htmlFileName);
 
+    console.log("* " + htmlFileName);
     // Retrieve the schema:
     const GDDSchema = await Schema.retrieveGDDSchema(filePath);
 
     // Validate the schema:
-    console.log("Validating " + htmlFileName);
     SchemaValidate.validateSchema(GDDSchema);
 
     // Let's go through the test cases to ensure that they work as intended:

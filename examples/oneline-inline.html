@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <title>One-Line GFX Template</title>
-    <!-- This tag contains the JSON-schema within the <meta> tag -->
-    <meta name="graphics-data-definition" type="application/json+gdd" content='
+    <!-- This tag contains the JSON-schema within the <script> tag -->
+      <script name="graphics-data-definition" type="application/json+gdd">
     {
       "title": "One-Line GFX Template",
       "type": "object",
@@ -22,9 +22,9 @@
           "text0"
       ]
     }
-    '>
+  </script>
     <script type="text/javascript">
-      window.gddContent = JSON.parse(document.querySelector('head > meta[name="graphics-data-definition"]').content)
+      window.gddSchema = JSON.parse(document.querySelector('head > script[name="graphics-data-definition"]').innerHTML)
     </script>
 
     <style>
