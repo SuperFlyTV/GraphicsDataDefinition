@@ -22,9 +22,7 @@
                     "favoriteColor": {
                         "label": "Favorite Color",
                         "type": "string",
-                        "gddType": [
-                            "rrggbb"
-                        ]
+                        "gddType": "color-rrggbb"
                     }
                 }
             }

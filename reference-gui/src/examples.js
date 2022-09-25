@@ -1,6 +1,5 @@
 export const examples = [
   {
-
     title: "One-line GFX Template",
     type: "object",
     properties: {
@@ -18,7 +17,6 @@ export const examples = [
     },
   },
   {
-
     title: "Table GFX Template",
     type: "object",
     properties: {
@@ -42,12 +40,12 @@ export const examples = [
             favoriteColor: {
               label: "Favorite Color",
               type: "string",
-              gddType: ["rrggbb"],
+              gddType: "color-rrggbb",
             },
             awake: {
               label: "Awake",
               type: "boolean",
-              default: true
+              default: true,
             },
             complicated: {
               label: "Complicated",
@@ -67,7 +65,7 @@ export const examples = [
             name: "Unnamed",
             // age: 33,
             favoriteColor: "#ff0000",
-          }
+          },
         },
       },
       Cities: {
@@ -94,7 +92,7 @@ export const examples = [
           favoriteColor: "#ff3355",
         },
       ],
-    }
+    },
   },
 ];
 

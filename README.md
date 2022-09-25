@@ -27,7 +27,11 @@ The `src=""` attribute can contain either a relative or an absolute URL.
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="graphics-data-definition" type="application/json+gdd" src="example.json" />
+    <meta
+      name="graphics-data-definition"
+      type="application/json+gdd"
+      src="example.json"
+    />
   </head>
   <body>
     *** Content goes here ***
@@ -45,7 +49,7 @@ The `src=""` attribute can contain either a relative or an absolute URL.
     "text0": {
       "description": "Text content",
       "type": "string",
-      "gddType": ["single-line"],
+      "gddType": "single-line",
       "gddOptions": {
         "maxLength": 50
       }
@@ -63,7 +67,10 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="graphics-data-definition" type="application/json+gdd" content='
+    <meta
+      name="graphics-data-definition"
+      type="application/json+gdd"
+      content='
       {
         "title": "One-Line GFX Template",
         "type": "object",
@@ -73,7 +80,8 @@ The `<meta>` tag can also contain the GDD Schema definitions inline:
           }
         },
       }
-    '>
+    '
+    />
   </head>
   <body>
     *** Content goes here ***
@@ -126,7 +134,7 @@ All properties share these definitions: ([JSON-schema definition](https://json-s
   "type": array, // See below
   "label": string, // [Optional] Short label to name the property
   "description": string, // [Optional] Longer description of the property
-  "gddType": array, // [Optional unless required by GDD Type] An array containing the GDD Type, see below
+  "gddType": string, // [Optional unless required by GDD Type] A string containing the GDD Type name, see below
   "gddOptions": object // [Optional unless required by GDD Type] An object containing options for a certain GDD Type, see below
 }
 ```
@@ -228,10 +236,17 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 
 ## GDD Types
 
-Here follows a list of the GDD Types, which provides more advanced functionality in GUIs.
+A **GDD Type** is an extension of one of the basic types described above,
+intended to be displayed to the user in a certain way.
 
-_Not all of these types are supported by all GUIs. If a type is not supported,
-the GUI will degrade gracefully to the next_
+The GDD Type is identified by the `gddType` property, a string on the form `"basic-type/advanced-type"`,
+containing more and more specialized GDD Types, separated by `"/"`.
+
+The GDD Types are designed in such a way to allow _graceful drgradation_.
+If a GUI doesn't support the display of a specific GDD Type (such as `gddType: "multi-line/rich-formatted-text"`),
+it will instead pick the next best thing (`gddType: "multi-line"`, or perhaps even the most basic `type: "string"`).
+
+Below follows a list of the GDD Types, which provides more advanced functionality in GUIs.
 
 Note: All `type`-properties below can be defined as optional by defining it as `["myType", "null"]`.
 
@@ -242,7 +257,7 @@ A variant of the text input, which specifically is a single line.
 ```json
 {
   "type": "string",
-  "gddType": ["single-line"]
+  "gddType": "single-line"
 }
 ```
 
@@ -255,7 +270,7 @@ A variant of the text input, which specifically is a multi-line.
 ```json
 {
   "type": "string",
-  "gddType": ["multi-line"]
+  "gddType": "multi-line"
 }
 ```
 
@@ -268,7 +283,7 @@ Lets the user pick a file from disk
 ```json
 {
   "type": "string",
-  "gddType": ["file-path"]
+  "gddType": "file-path"
   "gddOptions": {
     "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
   }
@@ -284,7 +299,7 @@ Lets the user pick an image file from disk
 ```json
 {
   "type": "string",
-  "gddType": ["file-path", "image-path"],
+  "gddType": "file-path/image-path",
   "gddOptions": {
     "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
   }
@@ -300,7 +315,8 @@ Let's the user pick a color.
 ```json
 {
   "type": "string",
-  "gddType": ["rrggbb"]
+  "pattern": "^#[0-9a-f]{6}$",
+  "gddType": "color-rrggbb"
 }
 ```
 
@@ -313,7 +329,7 @@ A number presented as a pecentage
 ```json
 {
   "type": "number",
-  "gddType": ["percentage"]
+  "gddType": "percentage"
 }
 ```
 
@@ -326,7 +342,7 @@ A duration value, to be presented in a human readable format (like "HH:MM:SS.xxx
 ```json
 {
   "type": "integer",
-  "gddType": ["durationMs"]
+  "gddType": "durationMs"
 }
 ```
 
@@ -347,14 +363,14 @@ function determineComponent(prop) {
     ? prop.type[1] === "null"
     : false;
 
-  if (equals(prop.gddType, ["file-path", "image-path"]))
+  if (prop.gddType === "file-path/image-path"))
     return componentImagePicker(prop, allowOptional);
-  if (equals(prop.gddType, ["file-path"]))
+  if (prop.gddType === "file-path"))
     return componentFilePicker(prop, allowOptional);
-  if (equals(prop.gddType, ["rrggbb"]))
+  if (prop.gddType === "rrggbb"))
     return componentRRGGBB(prop, allowOptional);
 
-  // Handle
+  // Fall back to handling the basic types:
 
   if (basicType === "boolean") return componentBoolean(prop, allowOptional);
   if (basicType === "string") return componentString(prop, allowOptional);

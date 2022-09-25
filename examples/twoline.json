@@ -8,9 +8,7 @@
                 "string"
             ],
             "maxLength": 50,
-            "gddType": [
-                "single-line"
-            ],
+            "gddType": "single-line",
             "gddOptions": {}
         }
     },
