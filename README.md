@@ -21,7 +21,7 @@ The GDD Schema can either be defined in a separate JSON-file, or inline in the H
 **HTML Graphics file, "example.html":**
 
 The `<script name="graphics-data-definition">` tag refers to a JSON-file that contains the GDD Schema definitions.
-The `src=""` is a relative URL to the Schema json file.
+The `src=""` is a relative path to the Schema json file.
 
 ```html
 <!DOCTYPE html>
@@ -363,19 +363,14 @@ The value is stored as a number in milliseconds, eg "1m23s" -> `83000`
 
 ## For GUI Developers
 
-When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD types - since the GDD types are designed to degrade gracefully.
+When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD Types - since the GDD Types are designed to degrade gracefully. The only types that are mandatory to implement are the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`and `"object"`.
 
 To degrade gracefully, it is recommended that you follow these practices when implementing the GUI:
 
 ```javascript
 function determineComponent(prop) {
-  // List of supported components, starting with "longest gddType" first:
 
-  const basicType = Array.isArray(prop.type) ? prop.type[0] : prop.type;
-  const allowOptional = Array.isArray(prop.type)
-    ? prop.type[1] === "null"
-    : false;
-
+  // List of supported GUI components, starting with "longest gddType" first:
   if (prop.gddType === "file-path/image-path"))
     return componentImagePicker(prop, allowOptional);
   if (prop.gddType === "file-path"))
@@ -383,16 +378,17 @@ function determineComponent(prop) {
   if (prop.gddType === "rrggbb"))
     return componentRRGGBB(prop, allowOptional);
 
-  // Fall back to handling the basic types:
+  // Fall back to handle the basic types:
+  const basicType = Array.isArray(prop.type) ? prop.type[0] : prop.type;
+  if (basicType === "boolean") return componentBoolean(prop);
+  if (basicType === "string") return componentString(prop);
+  if (basicType === "number") return componentNumber(prop);
+  if (basicType === "integer") return componentInteger(prop);
+  if (basicType === "array") return componentArray(prop);
+  if (basicType === "object") return componentObject(prop);
 
-  if (basicType === "boolean") return componentBoolean(prop, allowOptional);
-  if (basicType === "string") return componentString(prop, allowOptional);
-  if (basicType === "number") return componentNumber(prop, allowOptional);
-  if (basicType === "integer") return componentInteger(prop, allowOptional);
-  if (basicType === "array") return componentArray(prop, allowOptional);
-  if (basicType === "object") return componentObject(prop, allowOptional);
-
-  // This shouldn't really ever happen
   return null;
 }
 ```
+
+Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/reference-gui/dist/)

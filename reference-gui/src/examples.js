@@ -40,6 +40,7 @@ export const examples = [
             favoriteColor: {
               label: "Favorite Color",
               type: "string",
+              pattern: "^#[0-9a-f]{6}$",
               gddType: "color-rrggbb",
             },
             awake: {
