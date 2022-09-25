@@ -167,7 +167,8 @@ _All of these types are supported by all GUIs_
 
 ```json
 {
-  "type": "boolean"
+  "type": "boolean",
+  "default": boolean // [Optional] default value
 }
 ```
 
@@ -178,6 +179,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 ```json
 {
   "type": "string",
+  "default": string, // [Optional] default value
   "maxLength": number, // [Optional] See JSON-schema definition ^
   "minLength": number, // [Optional] See JSON-schema definition ^
   "pattern": Regular Expression, // [Optional] See JSON-schema definition ^
@@ -191,6 +193,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 ```json
 {
   "type": "number", // or "integer"
+  "default": number, // [Optional] default value
   "multipleOf": number, // [Optional] See JSON-schema definition ^
   "maximum": number, // [Optional] See JSON-schema definition ^
   "exclusiveMaximum": number, // [Optional] See JSON-schema definition ^
@@ -209,6 +212,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
   "items": { // Contains a definition of the items in the array
     "type": "string" // example
   },
+  "default": array, // [Optional] default value
   "maxItems": number, // [Optional] See JSON-schema definition ^
   "minItems": number, // [Optional] See JSON-schema definition ^
   "uniqueItems": boolean, // [Optional] See JSON-schema definition ^
@@ -227,6 +231,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
   "items": { // Contains a definition of the items in the array
     "type": "string" // example
   },
+  "default": object, // [Optional] default value
   "maxProperties": number, // [Optional] See JSON-schema definition ^
   "minProperties": number, // [Optional] See JSON-schema definition ^
   "required": boolean, // [Optional] See JSON-schema definition ^
