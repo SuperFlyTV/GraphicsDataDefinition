@@ -119,7 +119,7 @@ Examples of how to validate can be found here: _---TODO---_
 
 ### Schema
 
-```json
+```typescript
 {
   "title": "", // [optional] string, a short name of the GFX-template. Used for informational purposes only.
   "description": "", // [optional] string, a description GFX-template. Used for informational purposes only.
@@ -137,7 +137,7 @@ Examples of how to validate can be found here: _---TODO---_
 
 All properties share these definitions: ([JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#section-6.1))
 
-```json
+```typescript
 {
   "type": array, // See below
   "label": string, // [Optional] Short label to name the property
@@ -173,7 +173,7 @@ _All of these types are supported by all GUIs_
 
 ### Boolean
 
-```json
+```typescript
 {
   "type": "boolean",
   "default": boolean // [Optional] default value
@@ -184,7 +184,7 @@ _All of these types are supported by all GUIs_
 
 _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#section-6.3)_
 
-```json
+```typescript
 {
   "type": "string",
   "default": string, // [Optional] default value
@@ -198,7 +198,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 
 _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#section-6.2)_
 
-```json
+```typescript
 {
   "type": "number", // or "integer"
   "default": number, // [Optional] default value
@@ -214,7 +214,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 
 _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#section-6.4)_
 
-```json
+```typescript
 {
   "type": "array",
   "items": { // Contains a definition of the items in the array
@@ -233,7 +233,7 @@ _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-vali
 
 _[JSON-schema definition](https://json-schema.org/draft/2020-12/json-schema-validation.html#section-6.5)_
 
-```json
+```typescript
 {
   "type": "object",
   "items": { // Contains a definition of the items in the array
@@ -267,7 +267,7 @@ Note: All `type`-properties below can be defined as optional by defining it as `
 
 A variant of the text input, which specifically is a single line.
 
-```json
+```typescript
 {
   "type": "string",
   "gddType": "single-line"
@@ -280,7 +280,7 @@ Example: `"Hello World!"`
 
 A variant of the text input, which specifically is a multi-line.
 
-```json
+```typescript
 {
   "type": "string",
   "gddType": "multi-line"
@@ -293,7 +293,7 @@ Example: `"Hello World!\nI'm alive!"`
 
 Lets the user pick a file from disk
 
-```json
+```typescript
 {
   "type": "string",
   "gddType": "file-path"
@@ -309,7 +309,7 @@ Example: `C:\images\myFile.xml` or `folder/myFile.zip`
 
 Lets the user pick an image file from disk
 
-```json
+```typescript
 {
   "type": "string",
   "gddType": "file-path/image-path",
@@ -325,7 +325,7 @@ Example: `C:\images\myImage.jpg` or `folder/myImage.png`
 
 Let's the user pick a color.
 
-```json
+```typescript
 {
   "type": "string",
   "pattern": "^#[0-9a-f]{6}$",
@@ -339,7 +339,7 @@ The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`.
 
 A number presented as a pecentage
 
-```json
+```typescript
 {
   "type": "number",
   "gddType": "percentage"
@@ -352,10 +352,10 @@ The value is stored as a number, eg "25%" -> 0.25
 
 A duration value, to be presented in a human readable format (like "HH:MM:SS.xxx")
 
-```json
+```typescript
 {
   "type": "integer",
-  "gddType": "durationMs"
+  "gddType": "duration-ms"
 }
 ```
 
