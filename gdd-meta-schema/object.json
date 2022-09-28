@@ -43,7 +43,9 @@
     },
     "gddType": {
       "type": "string"
-
+    },
+    "gddOptions": {
+      "type": "object"
     }
   },
   "allOf": [
@@ -51,22 +53,9 @@
       "$ref": "https://json-schema.org/draft/2020-12/schema"
     },
     {
-      "if": {
-        "properties": {
-          "gddType": { "const": "color-rrggbb1" },
-          "required": ["gddType"]
-        }
-      },
-      "then": {
-        "properties": {
-          "gddOptions": {
-            "type": "object"
-
-
-          }
-        },
-        "required": ["gddOptions"]
-      }
+      "$ref": "./gdd-types.json"
     }
+
+
   ]
 }

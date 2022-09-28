@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gdd-meta-schema/gddTypes",
+
+  "allOf": [
+    {
+      "if": {
+        "properties": { "gddType": { "const": "file-path" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {
+              "extensions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "file-path/image-path" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {
+              "extensions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "color-rrggbb" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "pattern": {
+            "type": "string",
+            "const": "^#[0-9a-f]{6}$"
+          }
+        },
+        "required": ["pattern"]
+      }
+    }
+  ]
+}
