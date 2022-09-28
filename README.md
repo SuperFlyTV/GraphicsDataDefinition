@@ -361,6 +361,18 @@ A duration value, to be presented in a human readable format (like "HH:MM:SS.xxx
 
 The value is stored as a number in milliseconds, eg "1m23s" -> `83000`
 
+### -- Private GDD Types --
+
+Under the GDD schema, it is allowed to extend the offial GDD Types listed above with your own, custom GDD Types. Thanks to the graceful degradation of the GDD Types, a schema containing custom GDD Types is still a valid GDD Schema and will work in any GUI, the unsupported GDD Types will simply degrade to their closest type.
+
+Example:
+```typescript
+{
+  "type": "string",
+  "gddType": "single-line/my-custom-formatted-text" // Will degrade to be "single-line" or simply a "string"
+}
+```
+
 ## For GUI Developers
 
 When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD Types - since the GDD Types are designed to degrade gracefully. The only types that are mandatory to implement are the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`and `"object"`.
@@ -371,11 +383,11 @@ To degrade gracefully, it is recommended that you follow these practices when im
 function determineComponent(prop) {
 
   // List of supported GUI components, starting with "longest gddType" first:
-  if (prop.gddType === "file-path/image-path"))
+  if (prop.gddType.match("file-path/image-path"))
     return componentImagePicker(prop, allowOptional);
-  if (prop.gddType === "file-path"))
+  if (prop.gddType.match("file-path"))
     return componentFilePicker(prop, allowOptional);
-  if (prop.gddType === "rrggbb"))
+  if (prop.gddType.match("rrggbb"))
     return componentRRGGBB(prop, allowOptional);
 
   // Fall back to handle the basic types:
