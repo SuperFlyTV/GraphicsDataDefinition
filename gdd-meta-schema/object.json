@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gdd-meta-schema/object",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": [
+        "string",
+        "array"
+      ],
+      "enum": [
+        "boolean",
+        "string",
+        "number",
+        "integer",
+        "array",
+        "object",
+        [
+          "boolean",
+          "null"
+        ],
+        [
+          "string",
+          "null"
+        ],
+        [
+          "number",
+          "null"
+        ],
+        [
+          "integer",
+          "null"
+        ],
+        [
+          "array",
+          "null"
+        ],
+        [
+          "object",
+          "null"
+        ]
+      ]
+    },
+    "gddType": {
+      "type": "string"
+
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "https://json-schema.org/draft/2020-12/schema"
+    },
+    {
+      "if": {
+        "properties": {
+          "gddType": { "const": "color-rrggbb1" },
+          "required": ["gddType"]
+        }
+      },
+      "then": {
+        "properties": {
+          "gddOptions": {
+            "type": "object"
+
+
+          }
+        },
+        "required": ["gddOptions"]
+      }
+    }
+  ]
+}
