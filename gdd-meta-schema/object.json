@@ -14,31 +14,7 @@
         "number",
         "integer",
         "array",
-        "object",
-        [
-          "boolean",
-          "null"
-        ],
-        [
-          "string",
-          "null"
-        ],
-        [
-          "number",
-          "null"
-        ],
-        [
-          "integer",
-          "null"
-        ],
-        [
-          "array",
-          "null"
-        ],
-        [
-          "object",
-          "null"
-        ]
+        "object"
       ]
     },
     "gddType": {
