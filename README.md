@@ -158,12 +158,6 @@ To reduce the complexity for the GDD GUI implementation however, the valid value
 - `"integer"` (this is a number with a zero fractional part)
 - `"array"`
 - `"object"`
-- `["boolean", "null"]` ie a `boolean` or `null`
-- `["string", "null"]` ie a `string` or `null`
-- `["number", "null"]` ie a `number` or `null`
-- `["integer", "null"]` ie a `integer` or `null`
-- `["array", "null"]` ie a `array` or `null`
-- `["object", "null"]` ie a `object` or `null`
 
 ## Basic Types
 
