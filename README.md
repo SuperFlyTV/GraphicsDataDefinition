@@ -367,6 +367,30 @@ Example:
 }
 ```
 
+### Special GDD Type: "Invoke Action"
+
+Some templates support invoking custom functions during their life-time.
+This GDD Type should be rendered as a Button in the GUI so that the user can click it to invoke the action.
+
+
+Example:
+```typescript
+{
+  "title": string, // [Mandatory] A short title / label of the action
+  "description": "", // [Optional] A longer description of the action
+  "type": "null",
+  "gddType": "invoke-action",
+  "gddOptions": {
+    // [mandatory] The function to invoke in the template
+    // Example: myCustomHello("world", $path)
+    "invoke": string
+  }
+}
+```
+
+Note: `$path` is a special token which will be substituted at runtime with the path of the action. This is useful when having an action inside an array, since this would cause multiple actions to render (one per row in the data). An example of a path would be `people.2` for the action in the 3rd row of an array called `people`.
+
+
 ## For GUI Developers
 
 When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD Types - since the GDD Types are designed to degrade gracefully. The only types that are mandatory to implement are the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`and `"object"`.
@@ -392,6 +416,7 @@ function determineComponent(prop) {
   if (basicType === "integer") return componentInteger(prop);
   if (basicType === "array") return componentArray(prop);
   if (basicType === "object") return componentObject(prop);
+  if (basicType === "null") return null
 
   return null;
 }
