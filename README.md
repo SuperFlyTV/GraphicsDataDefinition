@@ -381,8 +381,8 @@ Example:
   "type": "null",
   "gddType": "invoke-action",
   "gddOptions": {
-    // [mandatory] The function to invoke in the template
-    // Example: myCustomHello("world", $path)
+    // [mandatory] The script to execute/invoke in the template
+    // Example: "myCustomHello(\"world\", $path)"
     "invoke": string
   }
 }
