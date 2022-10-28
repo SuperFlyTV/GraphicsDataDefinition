@@ -447,7 +447,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
        * This is mostly used for the older CasparCG flash-based xml data format.
        * Defaults to "json"
        */
-      "dataformat": "xml" | "json"
+      "dataformat": "json" | "caspar-xml"
     },
 
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
@@ -459,4 +459,6 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
   }
 }
 ```
+Details on the CasparCG XML format are described in [Appendix: CasparCG XML](/doc/appendix/casparcg-xml.md)
+
 Details for the device-specific options are described in [Appendix: Playout Options](/doc/appendix/playout-options.md)
