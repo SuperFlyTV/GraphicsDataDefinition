@@ -130,6 +130,9 @@ Examples of how to validate can be found here: _---TODO---_
     "myProperty": {}
   },
   "required": [] // [optional]
+  "gddPlayoutOptions": { // [optional]
+    // Contents described under "Playout options" below
+  }
 }
 ```
 
@@ -435,9 +438,70 @@ function determineComponent(prop) {
   if (basicType === "integer") return componentInteger(prop);
   if (basicType === "array") return componentArray(prop);
   if (basicType === "object") return componentObject(prop);
+  if (basicType === "null") return null
 
   return null;
 }
 ```
 
 Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/reference-gui/dist/)
+
+
+## Playout Options
+
+In the Schema, there is an option to add the `gddPlayoutOptions` object with various properties therein.
+These properties can be read by the playout client in order to modify how it'll display / use / play the template.
+
+_Note: All of the properties inside of `gddPlayoutOptions` are optional._
+
+```typescript
+{
+  "title": "My GFX Template",
+  "type": "object",
+  "properties": {
+    "myProperty": {
+      // ...
+    }
+  },
+  "gddPlayoutOptions": {
+    /** This object contains options that aren't tied to a specific playout server */
+    "client": {
+      /**
+       * The suggested duration of the template (in milliseconds)
+       * null means that it is manually taken out
+       * undefined should be treated as null
+       * (This is ignored if steps=0)
+       * Defaults to null
+       */
+      "duration": number | null
+
+      /**
+       * Number of steps in the template
+       * 1 means that there are no steps (ie there's only "the default step").
+       * 2 or more means that it can be "stepped" (ie 2 means it can be stepped once).
+       * -1 means "infinite" number of steps.
+       * 0 means that the template is "volatile" / "fire and forget" (template really has no duration, like a bumper).
+       * Defaults to 1
+      */
+      "steps": number,
+
+      /**
+       * How the data should be formatted.
+       * This is mostly used for the older CasparCG flash-based xml data format.
+       * Defaults to "json"
+       */
+      "dataformat": "json" | "caspar-xml"
+    },
+
+    /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
+    "playout" {
+      "**type-of-device**": {
+       // See Appendix for the device-specific options
+      }
+    }
+  }
+}
+```
+Details on the CasparCG XML format are described in [Appendix: CasparCG XML](/doc/appendix/casparcg-xml.md)
+
+Details for the device-specific options are described in [Appendix: Playout Options](/doc/appendix/playout-options.md)
