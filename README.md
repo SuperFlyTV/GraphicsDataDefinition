@@ -370,7 +370,7 @@ Let's the user pick a color.
 }
 ```
 
-The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`.
+The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`. An optional alpha part could be added, like #AARRGGBB. This is seldom used, but make sense to be supported.
 
 ### Percentage
 
