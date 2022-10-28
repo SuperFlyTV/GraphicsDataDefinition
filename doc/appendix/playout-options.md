@@ -41,6 +41,11 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
         /** The default / suggested layer to play on */
         "layer"?: number
 
+        /** A list of the commands supported by the template, can be displayed as buttons */
+        "commands": ["play", "next", "stop", "update", "(custom invokes)"]
+        /** A template should support "play" and "stop" as a minimum. Some templates are not meant to be updated when already */
+        /** played, so they shall not support "update". Some templates support invoke comands like "show", "hide", "showOvertime" */
+        /** or anything else. These commands can be used to render (or enable/disable) buttons in the UI. */
       },
     }
   }
