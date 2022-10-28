@@ -315,15 +315,17 @@ Lets the user pick an image file from disk
 
 Example: `"C:\images\myImage.jpg"` or `"folder/myImage.png"`
 
-### String and Number select
+### Select
 
-Lets the user select from a limited number of options
+Lets the user select from a limited number of options (this is often done from a dropdown menu).
+
+Please note that the `type` for this can be either of `"string"`, `"integer"` or `"number"`.
 
 ```json
 {
   "type": "string",
   "enum": ["one", "two", "three"],
-  "gddType": ["select"],
+  "gddType": "select",
   "gddOptions": {
     "labels": {
       "one": "Label for one",
@@ -333,25 +335,28 @@ Lets the user select from a limited number of options
   }
 }
 ```
-
-Or
-
+```json
+{
+  "type": "integer",
+  "enum": [1, 2, 3],
+  "gddType": "select",
+  "gddOptions": {
+    "labels": { "1": "Small", "2": "Medium", "3": "Large" }
+  }
+}
+```
 ```json
 {
   "type": "number",
   "enum": [1.2, 3.5, 9.0],
-  "gddType": ["select"],
+  "gddType": "select",
   "gddOptions": {
-    "labels": {
-      "1.2": "Small",
-      "3.5": "Medium",
-      "9.0": "Large",
-    }
+    "labels": { "1.2": "Small", "3.5": "Medium", "9.0": "Large" }
   }
 }
 ```
 
-Example: `"one"` or `1.2`
+Example data: `"one"`, `1` or `1.2`
 
 ### Color - RRGGBB
 
