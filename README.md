@@ -268,7 +268,7 @@ A variant of the text input, which specifically is a single line.
 }
 ```
 
-Example: `"Hello World!"`
+Example data: `"Hello World!"`
 
 ### Multi-line text
 
@@ -281,7 +281,7 @@ A variant of the text input, which specifically is a multi-line.
 }
 ```
 
-Example: `"Hello World!\nI'm alive!"`
+Example data: `"Hello World!\nI'm alive!"`
 
 ### File path
 
@@ -297,7 +297,7 @@ Lets the user pick a file from disk
 }
 ```
 
-Example: `"C:\images\myFile.xml"` or `"folder/myFile.zip"`
+Example data: `"C:\images\myFile.xml"` or `"folder/myFile.zip"`
 
 ### Image File path
 
@@ -313,7 +313,7 @@ Lets the user pick an image file from disk
 }
 ```
 
-Example: `"C:\images\myImage.jpg"` or `"folder/myImage.png"`
+Example data: `"C:\images\myImage.jpg"` or `"folder/myImage.png"`
 
 ### Select
 
