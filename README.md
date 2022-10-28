@@ -425,12 +425,12 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
     "client": {
       /**
        * The suggested duration of the template (in milliseconds)
-       * -1 means that it is manually taken out
-       * undefined should be treated as -1
+       * null means that it is manually taken out
+       * undefined should be treated as null
        * (This is ignored if steps=0)
-       * Defaults to -1
+       * Defaults to null
        */
-      "duration": number,
+      "duration": number | null
 
       /**
        * Number of steps in the template
