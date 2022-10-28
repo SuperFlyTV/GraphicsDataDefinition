@@ -452,25 +452,11 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
 
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
     "playout" {
-      "casparcg": {
-        /** The default server to play on (an IP-address or a hostname). */
-        "serverHost": string
-        /** The default server to play on. */
-        "serverPort": number
-
-        /** The default / suggested channel to play on */
-        "channel": number
-        /** The default / suggested layer to play on */
-        "layer": number
-
-      },
-      "vMix": {
-        // Todo
-      },
-      "viz": {
-        // Todo
+      "**type-of-device**": {
+       // See Appendix for the device-specific options
       }
     }
   }
 }
 ```
+Details for the device-specific options are described in [Appendix: Playout Options](/doc/appendix/playout-options.md)
