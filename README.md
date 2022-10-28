@@ -388,7 +388,9 @@ Example:
 }
 ```
 
-Note: `$path` is a special token which will be substituted at runtime with the path of the action. This is useful when having an action inside an array, since this would cause multiple actions to render (one per row in the data). An example of a path would be `people.2` for the action in the 3rd row of an array called `people`.
+Note: `$path` is a special token which will be substituted at runtime with the [JSONPath](https://goessner.net/articles/JsonPath/) of the action.
+This is useful when having an action inside an array, since this would cause multiple actions to render (one per row in the data).
+An example of a path would be `myData.people[2]` for the action in the 3rd row of an array called `people` in an object called `myData`.
 
 
 ## For GUI Developers
