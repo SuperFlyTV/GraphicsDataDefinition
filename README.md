@@ -6,7 +6,7 @@ _Everything in this document is subject to change and should be considered a pro
 
 **Table of contents**
 
-- [Gettings started](#getting-started)
+- [Getting started](#getting-started)
 - [General Definition](#general-definition)
 - [Basic Types](#basic-types)
 - [GDD Types](#gdd-types)
@@ -79,7 +79,7 @@ The `<script name="graphics-data-definition">` tag can also contain the GDD Sche
 
             }
           }
-        },
+        }
       }
     </script>
     <script type="text/javascript">
