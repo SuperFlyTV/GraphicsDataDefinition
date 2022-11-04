@@ -1,16 +1,19 @@
-import { Validator, Schema } from "jsonschema";
-import { GDDSchemaProperty } from "./types";
+import { Validator } from "jsonschema";
+import { GDDSchema, GDDSchemaProperty } from "./types";
 
 /**
  * Validates the data compared to the schema
- * @param {*} GDDSchema
+ * @param {*} gddSchema
  * @param {*} data
  * @returns null if all OK, error string otherwise
  */
-export function validateData(GDDSchema: Schema, data: unknown): string | null {
+export function validateData(
+  gddSchema: GDDSchema,
+  data: unknown
+): string | null {
   const v = new Validator();
 
-  const result = v.validate(data, GDDSchema);
+  const result = v.validate(data, gddSchema);
   if (result.errors.length > 0) {
     return result.errors.join("\n");
   }
