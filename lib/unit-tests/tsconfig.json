@@ -1,0 +1,17 @@
+{
+	"extends": "./tsconfig.build.json",
+	"include": [
+		"src/**/*.ts",
+		"examples/**/*.ts",
+		"__tests__/**/*.ts"
+	],
+	"exclude": [
+		"node_modules/**"
+	],
+	"compilerOptions": {
+		"types": [
+			"jest",
+			"node"
+		]
+	}
+}
