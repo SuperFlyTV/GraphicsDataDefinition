@@ -76,14 +76,14 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
-				authorName: 123 // bad type
+				authorName: 123, // bad type
 			})
 		).toMatch(/not.*string/)
 		expect(
 			validateSchema({
 				type: 'object',
 				properties: {},
-				authorEmail: "not-an-email" // bad format
+				authorEmail: 'not-an-email', // bad format
 			})
 		).toMatch(/does not conform.*email.*format/)
 		expect(
