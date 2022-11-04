@@ -145,7 +145,7 @@ All properties share these definitions: ([JSON-schema definition](https://json-s
 
 ```typescript
 {
-  "type": array, // See below
+  "type": string-enum, // See below
   "label": string, // [Optional] Short label to name the property
   "description": string, // [Optional] Longer description of the property
   "gddType": string, // [Optional unless required by GDD Type] A string containing the GDD Type name, see below
@@ -298,7 +298,7 @@ Lets the user pick a file from disk
   "type": "string",
   "gddType": "file-path"
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
+    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['txt', 'json']
   }
 }
 ```
@@ -314,7 +314,7 @@ Lets the user pick an image file from disk
   "type": "string",
   "gddType": "file-path/image-path",
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
+    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['jpg', 'png']
   }
 }
 ```
