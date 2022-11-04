@@ -1,4 +1,6 @@
-export function validateSchema(schema: any) {
+import { GDDSchema } from "./types";
+
+export function validateSchema(schema: GDDSchema): void {
   if (typeof schema !== "object") throw new Error(`Schema is not an object`);
   if (Array.isArray(schema)) throw new Error(`Schema is an Array`);
 
@@ -54,6 +56,8 @@ function validateProperty(property: any, key: string) {
 
   if (property.gddType) {
     if (typeof property.gddType !== "string")
-      throw new Error(`${key}: Property "gddType" must be a string (is a ${typeof property.gddType})`);
+      throw new Error(
+        `${key}: Property "gddType" must be a string (is a ${typeof property.gddType})`
+      );
   }
 }

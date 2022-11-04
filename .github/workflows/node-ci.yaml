@@ -9,25 +9,38 @@ on:
   pull_request:
 
 jobs:
+
   unit-tests:
     name: Unit Tests - Lint and Test
     runs-on: ubuntu-latest
-    continue-on-error: true
-    timeout-minutes: 15
+    continue-on-error: false
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
-      - name: cd lib/unit-tests
-        run: cd lib/unit-tests
-      - name: Install
+          node-version: 18
+      - name: Javascript library - Install
+        working-directory: ./lib/javascript-library
         run: yarn install
         env:
           CI: true
-      - name: Lint
+      - name: Javascript library - Lint
+        working-directory: ./lib/javascript-library
         run: yarn lint
-      - name: Test
+      - name: Javascript library - Build
+        working-directory: ./lib/javascript-library
+        run: yarn build
+      - name: Unit-tests - Install
+        working-directory: ./lib/unit-tests
+        run: yarn install
+        env:
+          CI: true
+      - name: Unit-tests - Lint
+        working-directory: ./lib/unit-tests
+        run: yarn lint
+      - name: Unit-tests - Test
+        working-directory: ./lib/unit-tests
         run: yarn test
