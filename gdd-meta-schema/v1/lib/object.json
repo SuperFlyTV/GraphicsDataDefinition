@@ -1,13 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "gdd-meta-schema/object",
+  "$id": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/lib/object.json",
   "type": "object",
   "properties": {
     "type": {
-      "type": [
-        "string",
-        "array"
-      ],
+      "type": "string",
       "enum": [
         "boolean",
         "string",
@@ -24,14 +21,16 @@
       "type": "object"
     }
   },
+  "required": ["type"],
   "allOf": [
     {
       "$ref": "https://json-schema.org/draft/2020-12/schema"
     },
     {
-      "$ref": "./gdd-types.json"
+      "$ref": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/lib/gdd-types.json"
+    },
+    {
+      "$ref": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/lib/basic-types.json"
     }
-
-
   ]
 }

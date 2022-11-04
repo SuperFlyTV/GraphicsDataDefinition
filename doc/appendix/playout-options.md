@@ -7,6 +7,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
 
 ```typescript
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
   "title": "My GFX Template",
   "type": "object",
   "properties": {

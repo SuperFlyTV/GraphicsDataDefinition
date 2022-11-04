@@ -1,0 +1,46 @@
+name: Node CI
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+*'
+  pull_request:
+
+jobs:
+
+  unit-tests:
+    name: Unit Tests - Lint and Test
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Javascript library - Install
+        working-directory: ./lib/javascript-library
+        run: yarn install
+        env:
+          CI: true
+      - name: Javascript library - Lint
+        working-directory: ./lib/javascript-library
+        run: yarn lint
+      - name: Javascript library - Build
+        working-directory: ./lib/javascript-library
+        run: yarn build
+      - name: Unit-tests - Install
+        working-directory: ./lib/unit-tests
+        run: yarn install
+        env:
+          CI: true
+      - name: Unit-tests - Lint
+        working-directory: ./lib/unit-tests
+        run: yarn lint
+      - name: Unit-tests - Test
+        working-directory: ./lib/unit-tests
+        run: yarn test

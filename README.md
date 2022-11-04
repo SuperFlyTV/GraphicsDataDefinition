@@ -43,6 +43,7 @@ The `src=""` is a relative path to the Schema json file.
 
 ```json
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
   "title": "One-Line GFX Template",
   "type": "object",
   "properties": {
@@ -67,6 +68,7 @@ The `<script name="graphics-data-definition">` tag can also contain the GDD Sche
   <head>
     <script name="graphics-data-definition" type="application/json+gdd">
       {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
         "title": "One-Line GFX Template",
         "type": "object",
         "properties": {
@@ -121,6 +123,7 @@ Examples of how to validate can be found here: _---TODO---_
 
 ```typescript
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json", // [optional] Reference to the JSON-schema
   "title": "", // [optional] string, a short name of the GFX-template. Used for informational purposes only.
   "description": "", // [optional] string, a description GFX-template. Used for informational purposes only.
   "type": "object", // MUST be "object"
@@ -142,7 +145,7 @@ All properties share these definitions: ([JSON-schema definition](https://json-s
 
 ```typescript
 {
-  "type": array, // See below
+  "type": string-enum, // See below
   "label": string, // [Optional] Short label to name the property
   "description": string, // [Optional] Longer description of the property
   "gddType": string, // [Optional unless required by GDD Type] A string containing the GDD Type name, see below
@@ -152,7 +155,7 @@ All properties share these definitions: ([JSON-schema definition](https://json-s
 
 #### The `type` property
 
-In the standard JSON-schema definition, the `type` property is allowed to be either a string or an array comtaining any combination of the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`, `"object"` or `"null"`.
+In the standard JSON-schema definition, the `type` property is allowed to be either a string or an array containing any combination of the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`, `"object"` or `"null"`.
 To reduce the complexity for the GDD GUI implementation however, the valid values for the `type` are reduced to these:
 
 - `"boolean"`
@@ -295,7 +298,7 @@ Lets the user pick a file from disk
   "type": "string",
   "gddType": "file-path"
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
+    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['txt', 'json']
   }
 }
 ```
@@ -311,7 +314,7 @@ Lets the user pick an image file from disk
   "type": "string",
   "gddType": "file-path/image-path",
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user
+    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['jpg', 'png']
   }
 }
 ```
@@ -470,6 +473,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
 
 ```typescript
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
   "title": "My GFX Template",
   "type": "object",
   "properties": {
@@ -487,7 +491,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
        * (This is ignored if steps=0)
        * Defaults to null
        */
-      "duration": number | null
+      "duration": integer | null
 
       /**
        * Number of steps in the template
@@ -497,14 +501,14 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
        * 0 means that the template is "volatile" / "fire and forget" (template really has no duration, like a bumper).
        * Defaults to 1
       */
-      "steps": number,
+      "steps": integer,
 
       /**
        * How the data should be formatted.
        * This is mostly used for the older CasparCG flash-based xml data format.
        * Defaults to "json"
        */
-      "dataformat": "json" | "caspar-xml"
+      "dataformat": "json" | "casparcg-xml"
     },
 
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */

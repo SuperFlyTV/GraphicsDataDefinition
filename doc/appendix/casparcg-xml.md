@@ -6,7 +6,7 @@ _Note: The information on this page is for reference only, it might not work wit
 
 In the old days, CasparCG supported Flash-based templates that used a XML-based schema for data interchange.
 
-For backwards-compatiblity, the option `client.gddPlayoutOptions.dataformat: "json" | "caspar-xml"` is provided as a way for playout clients to support the old Flash-based templates.
+For backwards-compatiblity, the option `client.gddPlayoutOptions.dataformat: "json" | "casparcg-xml"` is provided as a way for playout clients to support the old Flash-based templates.
 
 
 ## Data conversion
