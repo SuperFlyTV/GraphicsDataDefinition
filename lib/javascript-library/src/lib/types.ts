@@ -1,3 +1,5 @@
+import { Schema } from "jsonschema";
+
 export type GDDSchema = GDDSchemaPropertyObject;
 
 export type GDDSchemaProperty =
@@ -8,31 +10,36 @@ export type GDDSchemaProperty =
   | GDDSchemaPropertyObject
   | GDDSchemaPropertyArray;
 
-export interface GDDSchemaPropertyBoolean {
+export interface GDDSchemaPropertyBoolean extends GDDSchemaPropertyBase {
   type: "boolean";
   default?: boolean;
 }
-export interface GDDSchemaPropertyString {
+export interface GDDSchemaPropertyString extends GDDSchemaPropertyBase {
   type: "string";
   default?: string;
 }
-export interface GDDSchemaPropertyNumber {
+export interface GDDSchemaPropertyNumber extends GDDSchemaPropertyBase {
   type: "number";
   default?: number;
 }
-export interface GDDSchemaPropertyInteger {
+export interface GDDSchemaPropertyInteger extends GDDSchemaPropertyBase {
   type: "integer";
   default?: number;
 }
-export interface GDDSchemaPropertyObject {
+export interface GDDSchemaPropertyObject extends GDDSchemaPropertyBase {
   type: "object";
   properties: {
     [key: string]: GDDSchemaProperty;
   };
   default?: { [key: string]: any };
 }
-export interface GDDSchemaPropertyArray {
+export interface GDDSchemaPropertyArray extends GDDSchemaPropertyBase {
   type: "array";
   items: GDDSchemaProperty;
   default?: any[];
+}
+
+export interface GDDSchemaPropertyBase extends Schema {
+  gddType?: string;
+  gddOptions?: { [key: string]: any };
 }
