@@ -125,7 +125,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [] // empty is not allowed
+					resolutions: [], // empty is not allowed
 				},
 			},
 		})
@@ -136,7 +136,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: 123 } ]
+					resolutions: [{ width: 123 }],
 				},
 			},
 		})
@@ -147,7 +147,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: "123" } ] // bad type
+					resolutions: [{ width: '123' }], // bad type
 				},
 			},
 		})
@@ -158,7 +158,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: { min: 100, max: 9999 } } ]
+					resolutions: [{ width: { min: 100, max: 9999 } }],
 				},
 			},
 		})
@@ -169,7 +169,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: { max: "two" } } ] // bad type
+					resolutions: [{ width: { max: 'two' } }], // bad type
 				},
 			},
 		})
@@ -180,7 +180,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: { max: 9000 }, height: 500, framerate: 50 } ]
+					resolutions: [{ width: { max: 9000 }, height: 500, framerate: 50 }],
 				},
 			},
 		})
@@ -191,7 +191,7 @@ test('gddPlayoutOptions.render', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				render: {
-					resolutions: [ { width: { max: 9000 }, height: 500, framerate: "50" } ] // bad type
+					resolutions: [{ width: { max: 9000 }, height: 500, framerate: '50' }], // bad type
 				},
 			},
 		})

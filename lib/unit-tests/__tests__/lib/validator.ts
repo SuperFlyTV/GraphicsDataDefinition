@@ -113,8 +113,6 @@ async function getJSON(filePath: string): Promise<any> {
 			if (e.message) e.message = e.message + ' ' + filePath
 			throw e
 		}
-
-
 	} else {
 		return null
 	}

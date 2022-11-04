@@ -502,6 +502,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
       /**
        * This property contains an array of the supported resolutions of the GFX Template.
        * The array must contain at least one resolution.
+       * This can be used by the client to determine whether a template is compatible with the current renderer or not.
        * Examples:
        * * A template which only supports a fixed resolution and framerate:
        *   "resolutions": [{ "width": 1280, "height": 720, "framerate": 50 }]
