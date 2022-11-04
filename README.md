@@ -498,7 +498,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
     },
 
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
-    "playout" {
+    "playout": {
       "**type-of-device**": {
        // See Appendix for the device-specific options
       }

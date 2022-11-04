@@ -105,11 +105,16 @@ async function getJSON(filePath: string): Promise<any> {
 
 	if (await fileExists(filePath)) {
 		const read = await fs.promises.readFile(filePath, 'utf-8')
-		const content = JSON.parse(read)
+		try {
+			const content = JSON.parse(read)
+			cache.set(filePath, content)
+			return content
+		} catch (e: any) {
+			if (e.message) e.message = e.message + ' ' + filePath
+			throw e
+		}
 
-		cache.set(filePath, content)
 
-		return content
 	} else {
 		return null
 	}
