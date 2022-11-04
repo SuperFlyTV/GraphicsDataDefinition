@@ -15,13 +15,17 @@
       ]
     },
     "$schema": {
-      "type": "string"
+      "type": "string",
+      "const": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
+      "description": "Reference to the JSON-schema"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "description": "A short name of the GFX-template. Used for informational purposes only."
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "description": "A description GFX-template. Used for informational purposes only."
     },
     "authorName": {
       "type": "string",

@@ -16,7 +16,7 @@ _Everything in this document is subject to change and should be considered a pro
 
 The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file.
 
-**[A live demo of a Reference GUI can be found here!](https://superflytv.github.io/GraphicsDataDefinition/reference-gui/dist/)**
+**[A live demo of a Reference GUI can be found here!](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)**
 
 **HTML Graphics file, "example.html":**
 
@@ -449,7 +449,7 @@ function determineComponent(prop) {
 }
 ```
 
-Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/reference-gui/dist/)
+Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
 
 
 ## Playout Options

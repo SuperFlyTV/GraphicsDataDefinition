@@ -86,6 +86,13 @@ describe('Schema - Basic types', () => {
 				authorEmail: "not-an-email" // bad format
 			})
 		).toMatch(/does not conform.*email.*format/)
+		expect(
+			validateSchema({
+				type: 'object',
+				properties: {},
+				$schema: 'wrong-schema', // wrong URI
+			})
+		).toMatch(/does not.*match.*const/)
 
 		expect(
 			validateSchema({
