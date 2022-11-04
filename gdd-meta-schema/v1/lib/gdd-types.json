@@ -1,8 +1,34 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "gdd-meta-schema/gddTypes",
+  "$id": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/lib/gdd-types.json",
 
   "allOf": [
+    {
+      "if": {
+        "properties": { "gddType": { "const": "single-line" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "multi-line" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          }
+        }
+      }
+    },
     {
       "if": {
         "properties": { "gddType": { "const": "file-path" } },
@@ -53,6 +79,122 @@
     },
     {
       "if": {
+        "properties": { "gddType": { "const": "select" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "enum": ["string", "number", "integer"]
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {},
+            "required": ["labels"]
+          }
+        },
+        "required": ["gddOptions", "enum"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "gddType": { "const": "select" },
+          "type": { "const": "string" }
+        },
+        "required": ["gddType", "type"]
+      },
+      "then": {
+        "properties": {
+          "enum": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": ["gddOptions", "enum"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "gddType": { "const": "select" },
+          "type": { "const": "integer" }
+        },
+        "required": ["gddType", "type"]
+      },
+      "then": {
+        "properties": {
+          "enum": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {
+              "labels": {
+                "type": "object",
+                "propertyNames": {
+                  "pattern": "^[0-9]+$"
+                },
+                "patternProperties": {
+                  ".": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "required": ["gddOptions", "enum"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "gddType": { "const": "select" },
+          "type": { "const": "number" }
+        },
+        "required": ["gddType", "type"]
+      },
+      "then": {
+        "properties": {
+          "enum": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "gddOptions": {
+            "type": "object",
+            "properties": {
+              "labels": {
+                "type": "object",
+                "propertyNames": {
+                  "pattern": "^[0-9,.]+$"
+                },
+                "patternProperties": {
+                  ".": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["gddOptions", "enum"]
+      }
+    },
+    {
+      "if": {
         "properties": { "gddType": { "const": "color-rrggbb" } },
         "required": ["gddType"]
       },
@@ -67,6 +209,32 @@
           }
         },
         "required": ["pattern"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "percentage" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "number"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "duration-ms" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "integer"
+          }
+        }
       }
     }
   ]
