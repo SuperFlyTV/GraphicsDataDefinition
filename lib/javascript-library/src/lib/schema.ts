@@ -1,8 +1,8 @@
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 import fetch from 'node-fetch';
 
-export async function retrieveGDDSchema(htmlFilePath) {
+export async function retrieveGDDSchema(htmlFilePath: string) {
     const folderOfHTMLFile = path.dirname(htmlFilePath)
 
     // Start by reading the HTML-file:
@@ -52,7 +52,7 @@ export async function retrieveGDDSchema(htmlFilePath) {
  * @param string htmlString
  * @returns The path to the JSON file.
  */
-function extractGDDJSONPath(htmlString) {
+function extractGDDJSONPath(htmlString: string) {
     const match = htmlString.match(/<script([\S\s]*?name=["']graphics-data-definition['"][\S\s]*?)>/)
     if (!match) return null
 
@@ -79,7 +79,7 @@ const exampleSchemaTag = ' <script name="graphics-data-definition" type="applica
  * @param string htmlString
  * @returns The path to the JSON file.
  */
-function extractGDDJSONFromHTMLFile(htmlString) {
+function extractGDDJSONFromHTMLFile(htmlString: string) {
     const match = (
         // Matches: <script name="graphics-data-definition" type="application/json+gdd" >CONTENT</script>
         htmlString.match(/<script [\S\s]*?name=["']graphics-data-definition['"][\S\s]*?>([\s\S]*?)<\/script>/)
@@ -94,57 +94,3 @@ const exampleSchemaTagWithContent = `<script name="graphics-data-definition" typ
 *** GDD Schema ***
 </script>`
 
-export function validateSchema(schema) {
-
-    if (!typeof schema === 'object') throw new Error(`Schema is not an object`)
-    if (Array.isArray(schema)) throw new Error(`Schema is an Array`)
-
-    if (!schema.properties) throw new Error(`Schema.properties missing`)
-
-    validateProperties(schema.properties, '')
-}
-function validateProperties(properties, key) {
-    if (key) key += '.'
-
-    for (const [propKey, prop] of Object.entries(properties)) {
-        validateProperty(prop, key + propKey)
-    }
-}
-function validateProperty(property, key) {
-    if (!property.type) throw new Error(`${key}: Property "type" missing`)
-
-    const typeValues = ["boolean", "string", "number", "integer", "array", "object"] // not "null"
-
-    let baseType
-    if (typeof property.type === 'string') {
-        baseType = property.type
-    } else if (Array.isArray(property.type)) {
-        if (property.type.length === 1) {
-            // nothing
-        } else if (property.type.length === 2) {
-            if (property.type[1] !== 'null') throw new Error(`${key}: Second element of property "type" must be "null"`)
-        } else
-            throw new Error(`${key}: Property "type" must be an array of length 1 or 2`)
-        baseType = property.type[0]
-    } else
-        throw new Error(`${key}: Property "type" must be a string or an array`)
-
-    if (
-        !typeValues.includes(baseType)
-    ) throw new Error(`${key}: First element of property "type" has value "${property.type[0]}", which is not one of the valid ones (${typeValues.join(', ')})`)
-
-
-
-
-
-
-
-
-
-
-
-    if (property.gddType) {
-        if (!Array.isArray(property.gddType))
-            throw new Error(`${key}: Property "gddType" must be an array`)
-    }
-}

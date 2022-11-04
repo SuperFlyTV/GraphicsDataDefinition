@@ -6,7 +6,7 @@ import { Validator } from "jsonschema";
  * @param {*} data
  * @returns null if all OK, error string otherwise
  */
-export function validateData(GDDSchema, data) {
+export function validateData(GDDSchema: any, data: any) {
   const v = new Validator();
 
   const result = v.validate(data, GDDSchema);
@@ -18,7 +18,7 @@ export function validateData(GDDSchema, data) {
 
   return null;
 }
-export function getDefaultDataFromSchema(GDDSchema, prefilledData, key) {
+export function getDefaultDataFromSchema(GDDSchema: any, prefilledData: any, key: string) {
   // Note: this function assumes that the schema provided has been validated by validateSchema()
 
   if (GDDSchema.type === 'object') {
@@ -45,6 +45,7 @@ export function getDefaultDataFromSchema(GDDSchema, prefilledData, key) {
     if (GDDSchema.type === "integer") return 0
   }
 }
-function clone(obj) {
+function clone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj))
 }
+

@@ -1,5 +1,5 @@
-export function validateSchema(schema) {
-  if (!typeof schema === "object") throw new Error(`Schema is not an object`);
+export function validateSchema(schema: any) {
+  if (typeof schema !== "object") throw new Error(`Schema is not an object`);
   if (Array.isArray(schema)) throw new Error(`Schema is an Array`);
 
   if (schema.type !== "object") throw new Error(`Schema.type must be "object"`);
@@ -7,14 +7,14 @@ export function validateSchema(schema) {
 
   validateProperties(schema.properties, "");
 }
-function validateProperties(properties, key) {
+function validateProperties(properties: any, key: string) {
   if (key) key += ".";
 
   for (const [propKey, prop] of Object.entries(properties)) {
     validateProperty(prop, key + propKey);
   }
 }
-function validateProperty(property, key) {
+function validateProperty(property: any, key: string) {
   if (!property.type) throw new Error(`${key}: Property "type" missing`);
 
   const typeValues = [
