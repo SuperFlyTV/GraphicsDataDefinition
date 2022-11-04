@@ -68,6 +68,24 @@
         },
         "required": ["pattern"]
       }
+    },
+    {
+      "if": {
+        "properties": { "gddType": { "const": "color-rrggbbaa" } },
+        "required": ["gddType"]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "pattern": {
+            "type": "string",
+            "const": "^#[0-9a-f]{8}$"
+          }
+        },
+        "required": ["pattern"]
+      }
     }
   ]
 }
