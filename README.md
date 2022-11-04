@@ -155,7 +155,7 @@ All properties share these definitions: ([JSON-schema definition](https://json-s
 
 #### The `type` property
 
-In the standard JSON-schema definition, the `type` property is allowed to be either a string or an array comtaining any combination of the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`, `"object"` or `"null"`.
+In the standard JSON-schema definition, the `type` property is allowed to be either a string or an array containing any combination of the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`, `"object"` or `"null"`.
 To reduce the complexity for the GDD GUI implementation however, the valid values for the `type` are reduced to these:
 
 - `"boolean"`
@@ -477,7 +477,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
        * (This is ignored if steps=0)
        * Defaults to null
        */
-      "duration": number | null
+      "duration": integer | null
 
       /**
        * Number of steps in the template
@@ -487,14 +487,14 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
        * 0 means that the template is "volatile" / "fire and forget" (template really has no duration, like a bumper).
        * Defaults to 1
       */
-      "steps": number,
+      "steps": integer,
 
       /**
        * How the data should be formatted.
        * This is mostly used for the older CasparCG flash-based xml data format.
        * Defaults to "json"
        */
-      "dataformat": "json" | "caspar-xml"
+      "dataformat": "json" | "casparcg-xml"
     },
 
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
