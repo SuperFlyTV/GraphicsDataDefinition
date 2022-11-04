@@ -1,4 +1,5 @@
 {
+    "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
     "title": "Table GFX Template",
     "type": "object",
     "properties": {

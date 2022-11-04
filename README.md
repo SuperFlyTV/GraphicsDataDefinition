@@ -43,6 +43,7 @@ The `src=""` is a relative path to the Schema json file.
 
 ```json
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
   "title": "One-Line GFX Template",
   "type": "object",
   "properties": {
@@ -67,6 +68,7 @@ The `<script name="graphics-data-definition">` tag can also contain the GDD Sche
   <head>
     <script name="graphics-data-definition" type="application/json+gdd">
       {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
         "title": "One-Line GFX Template",
         "type": "object",
         "properties": {
@@ -121,6 +123,7 @@ Examples of how to validate can be found here: _---TODO---_
 
 ```typescript
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json", // [optional] Reference to the JSON-schema
   "title": "", // [optional] string, a short name of the GFX-template. Used for informational purposes only.
   "description": "", // [optional] string, a description GFX-template. Used for informational purposes only.
   "type": "object", // MUST be "object"
@@ -456,6 +459,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
 
 ```typescript
 {
+  "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
   "title": "My GFX Template",
   "type": "object",
   "properties": {
