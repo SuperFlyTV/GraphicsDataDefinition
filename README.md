@@ -126,6 +126,8 @@ Examples of how to validate can be found here: _---TODO---_
   "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json", // [optional] Reference to the JSON-schema
   "title": "", // [optional] string, a short name of the GFX-template. Used for informational purposes only.
   "description": "", // [optional] string, a description GFX-template. Used for informational purposes only.
+  "authorName": "", // [optional] string, name of the author.
+  "authorEmail": "", // [optional] string, email to the author.
   "type": "object", // MUST be "object"
   "properties": {
     // MUST be an object

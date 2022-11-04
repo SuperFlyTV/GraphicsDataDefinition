@@ -76,9 +76,26 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
+				authorName: 123 // bad type
+			})
+		).toMatch(/not.*string/)
+		expect(
+			validateSchema({
+				type: 'object',
+				properties: {},
+				authorEmail: "not-an-email" // bad format
+			})
+		).toMatch(/does not conform.*email.*format/)
+
+		expect(
+			validateSchema({
+				type: 'object',
+				properties: {},
 				title: 'A title',
 				description: 'a description',
 				$schema: 'https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json',
+				authorName: 'author',
+				authorEmail: 'test@test.com',
 				gddPlayoutOptions: {},
 			})
 		).toBe(null)
