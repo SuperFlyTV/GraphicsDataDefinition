@@ -76,6 +76,14 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
+				$schema: 'wrong-schema', // wrong URI
+			})
+		).toMatch(/does not.*match.*const/)
+
+		expect(
+			validateSchema({
+				type: 'object',
+				properties: {},
 				title: 'A title',
 				description: 'a description',
 				$schema: 'https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json',
