@@ -13,7 +13,10 @@ describe('Schema - Basic types', () => {
 		const validateSchema = await setupValidator()
 
 		// Basic
-		expect(validateSchema(123)).toBeTruthy()
+		expect(validateSchema(
+			// @ts-expect-error bad type
+			123
+		)).toBeTruthy()
 
 		// Minimal object:
 		expect(
@@ -27,12 +30,13 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				// properties missing
-			})
+			} as any)
 		).toMatch(/require.*properties/)
 		expect(
 			validateSchema({
 				type: 'object',
-				properties: false, // bad type
+				// @ts-expect-error bad type
+				properties: false,
 			})
 		).toMatch(/object/)
 		expect(
@@ -46,21 +50,24 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
-				title: 123, // bad type
+				// @ts-expect-error bad type
+				title: 123,
 			})
 		).toMatch(/not.*string/)
 		expect(
 			validateSchema({
 				type: 'object',
 				properties: {},
-				description: 123, // bad type
+				// @ts-expect-error bad type
+				description: 123,
 			})
 		).toMatch(/not.*string/)
 		expect(
 			validateSchema({
 				type: 'object',
 				properties: {},
-				$schema: 123, // bad type
+				// @ts-expect-error bad type
+				$schema: 123,
 			})
 		).toMatch(/not.*string/)
 
@@ -68,7 +75,8 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
-				gddPlayoutOptions: 123, // bad type
+				// @ts-expect-error bad type
+				gddPlayoutOptions: 123,
 			})
 		).toMatch(/not.*object/)
 
@@ -99,7 +107,8 @@ describe('Schema - Basic types', () => {
 				type: 'object',
 				properties: {
 					text: {
-						type: 'asdf', // bad type
+						// @ts-expect-error bad type
+						type: 'asdf',
 					},
 				},
 			})
@@ -129,7 +138,7 @@ describe('Schema - Basic types', () => {
 				properties: {
 					text: {
 						type: 'boolean',
-						default: 123, // bad default value
+						default: 123 as any, // bad default value
 					},
 				},
 			})
@@ -155,7 +164,7 @@ describe('Schema - Basic types', () => {
 				properties: {
 					text: {
 						type: 'string',
-						default: 123, // bad default value
+						default: 123 as any, // bad default value
 					},
 				},
 			})
@@ -185,7 +194,7 @@ describe('Schema - Basic types', () => {
 				properties: {
 					text: {
 						type: 'number',
-						default: '123', // bad default value
+						default: '123' as any, // bad default value
 					},
 				},
 			})
@@ -254,7 +263,7 @@ describe('Schema - Basic types', () => {
 						type: 'array',
 						items: {
 							// type missing
-						},
+						} as any,
 					},
 				},
 			})
@@ -266,7 +275,7 @@ describe('Schema - Basic types', () => {
 					text: {
 						type: 'array',
 						// items missing
-					},
+					} as any,
 				},
 			})
 		).toMatch(/require.*items/)
@@ -280,7 +289,7 @@ describe('Schema - Basic types', () => {
 						items: {
 							type: 'string',
 						},
-						default: 123, // bad type
+						default: 123 as any, // bad type
 					},
 				},
 			})
@@ -295,7 +304,8 @@ describe('Schema - Basic types', () => {
 						items: {
 							type: 'string',
 						},
-						maxItems: 'asdf', // bad type
+						// @ts-expect-error bad type
+						maxItems: 'asdf',
 					},
 				},
 			})
@@ -328,7 +338,7 @@ describe('Schema - Basic types', () => {
 					text: {
 						type: 'object',
 						properties: {},
-						default: 123, // bad type
+						default: 123 as any, // bad type
 					},
 				},
 			})
@@ -340,7 +350,7 @@ describe('Schema - Basic types', () => {
 					text: {
 						type: 'object',
 						// properties missing
-					},
+					} as any,
 				},
 			})
 		).toMatch(/require.*properties/)

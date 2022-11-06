@@ -52,7 +52,8 @@ test('gddPlayoutOptions.client', async () => {
 			properties: {},
 			gddPlayoutOptions: {
 				client: {
-					duration: 'asdf', // wrong type
+					// @ts-expect-error wrong type
+					duration: 'asdf',
 				},
 			},
 		})
@@ -76,6 +77,7 @@ test('gddPlayoutOptions.client', async () => {
 
 			gddPlayoutOptions: {
 				client: {
+					// @ts-expect-error wrong type
 					steps: 'one', // wrong type
 				},
 			},
@@ -100,7 +102,8 @@ test('gddPlayoutOptions.client', async () => {
 
 			gddPlayoutOptions: {
 				client: {
-					dataformat: 'jsun', // misspelled
+					// @ts-expect-error misspelled
+					dataformat: 'jsun',
 				},
 			},
 		})

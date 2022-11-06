@@ -1,63 +1,91 @@
-import { GDDSchema } from "./types";
+import { Schema, Validator } from 'jsonschema'
+import { GDDSchema } from './types'
 
-export function validateSchema(schema: GDDSchema): void {
-  if (typeof schema !== "object") throw new Error(`Schema is not an object`);
-  if (Array.isArray(schema)) throw new Error(`Schema is an Array`);
+export type SchemaValidator = (schema: GDDSchema) => string | null
+export type ValidatorCache = { [key: string]: Schema }
+let cachedValidator: undefined | SchemaValidator = undefined
 
-  if (schema.type !== "object") throw new Error(`Schema.type must be "object"`);
-  if (!schema.properties) throw new Error(`Schema.properties missing`);
+/**
+ * Downloads the GDD meta-schemas needed for the validator to work
+ * @returns
+ */
+export async function setupSchemaValidator(options: {
+	fetch: (url: string) => Promise<any>
+	getCache?: () => Promise<ValidatorCache>
+}): Promise<{
+	validate: SchemaValidator
+	cache: ValidatorCache | null
+}> {
+	if (cachedValidator) {
+		return {
+			validate: cachedValidator,
+			cache: null,
+		}
+	}
 
-  validateProperties(schema.properties, "");
-}
-function validateProperties(properties: any, key: string) {
-  if (key) key += ".";
+	const cache: ValidatorCache = options.getCache ? await options.getCache() : {}
 
-  for (const [propKey, prop] of Object.entries(properties)) {
-    validateProperty(prop, key + propKey);
-  }
-}
-function validateProperty(property: any, key: string) {
-  if (!property.type) throw new Error(`${key}: Property "type" missing`);
+	const baseURL = 'https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema'
 
-  const typeValues = [
-    "boolean",
-    "string",
-    "number",
-    "integer",
-    "array",
-    "object",
-  ]; // not "null"
+	const v = new Validator()
+	async function addRef(ref: string): Promise<Schema> {
+		// Check if it is in the local cache first:
+		if (cache[ref]) {
+			v.addSchema(cache[ref], ref)
+			return cache[ref]
+		} else {
+			const content: Schema = await options.fetch(ref)
+			if (!content) throw new Error(`Not able to resolve schema for "${ref}"`)
+			v.addSchema(content, ref)
+			cache[ref] = content
+			return content
+		}
+	}
 
-  let baseType;
-  if (typeof property.type === "string") {
-    baseType = property.type;
-  } else if (Array.isArray(property.type)) {
-    if (property.type.length === 1) {
-      // nothing
-    } else if (property.type.length === 2) {
-      if (property.type[1] !== "null")
-        throw new Error(
-          `${key}: Second element of property "type" must be "null"`
-        );
-    } else
-      throw new Error(
-        `${key}: Property "type" must be an array of length 1 or 2`
-      );
-    baseType = property.type[0];
-  } else
-    throw new Error(`${key}: Property "type" must be a string or an array`);
+	let handledRefs = 0
+	let bailOut = false
+	const handled = new Set()
+	async function handleUnresolvedRefs() {
+		if (bailOut) return
 
-  if (!typeValues.includes(baseType))
-    throw new Error(
-      `${key}: First element of property "type" has value "${
-        property.type[0]
-      }", which is not one of the valid ones (${typeValues.join(", ")})`
-    );
+		const refsToHandle: string[] = []
+		for (let i = 0; i < v.unresolvedRefs.length; i++) {
+			const ref = v.unresolvedRefs.shift()
+			if (!ref) break
+			if (refsToHandle.length > 30) break
+			if (handled.has(ref)) continue
 
-  if (property.gddType) {
-    if (typeof property.gddType !== "string")
-      throw new Error(
-        `${key}: Property "gddType" must be a string (is a ${typeof property.gddType})`
-      );
-  }
+			refsToHandle.push(ref)
+			handled.add(ref)
+		}
+		await Promise.all(
+			refsToHandle.map(async (ref: string) => {
+				handledRefs++
+				if (handledRefs > 100) {
+					bailOut = true
+					return
+				}
+
+				const fixedRef = ref.replace(/#.*/, '')
+
+				await addRef(fixedRef)
+				await handleUnresolvedRefs()
+			})
+		)
+	}
+	const baseSchema = await addRef(baseURL + '/v1/schema.json')
+	await handleUnresolvedRefs()
+
+	if (bailOut) throw new Error(`Bailing out, more than ${handledRefs} references found!`)
+
+	cachedValidator = (schema: Schema) => {
+		const result = v.validate(schema, baseSchema)
+
+		if (result.errors.length === 0) return null
+		return 'Error: ' + result.errors.map((err) => err.path + ':' + err.message).join(',\n')
+	}
+	return {
+		validate: cachedValidator,
+		cache: cache,
+	}
 }
