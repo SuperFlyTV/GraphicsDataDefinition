@@ -26,6 +26,7 @@
     "jsonschema": "^1.4.1",
     "node-fetch": "^2.6.1"
   },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "engines": {
     "node": ">=14"
   }
