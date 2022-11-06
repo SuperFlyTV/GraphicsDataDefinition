@@ -32,6 +32,7 @@ export type GDDSchemaProperty =
 	| GDDSchemaPropertyInteger
 	| GDDSchemaPropertyObject
 	| GDDSchemaPropertyArray
+	| GDDTypes
 
 export interface GDDSchemaPropertyBoolean extends GDDSchemaPropertyBase {
 	type: 'boolean'
@@ -62,7 +63,67 @@ export interface GDDSchemaPropertyArray extends GDDSchemaPropertyBase {
 	default?: any[]
 }
 
-export interface GDDSchemaPropertyBase extends Schema {
-	gddType?: string
-	gddOptions?: { [key: string]: any }
+export type GDDSchemaPropertyBase = Schema
+
+// ---------- GDD Types ----------------------
+export type GDDTypes =
+	| GDDTypeSingleLine
+	| GDDTypeMultiLine
+	| GDDTypeFilePath
+	| GDDTypeFilePathImagePath
+	| GDDTypeStringSelect
+	| GDDTypeNumberSelect
+	| GDDTypeIntegerSelect
+	| GDDTypeColorRRGGBB
+	| GDDTypePercentage
+	| GDDTypeDurationMs
+
+export interface GDDTypeSingleLine extends GDDSchemaPropertyString {
+	gddType: 'single-line'
+}
+export interface GDDTypeMultiLine extends GDDSchemaPropertyString {
+	gddType: 'multi-line'
+}
+export interface GDDTypeFilePath extends GDDSchemaPropertyString {
+	gddType: 'file-path'
+	gddOptions?: {
+		extensions?: string[]
+	}
+}
+export interface GDDTypeFilePathImagePath extends GDDSchemaPropertyString {
+	gddType: 'file-path/image-path'
+	gddOptions?: {
+		extensions?: string[]
+	}
+}
+export interface GDDTypeStringSelect extends GDDSchemaPropertyString {
+	gddType: 'select'
+	enum: []
+	gddOptions: {
+		labels: { [key: string]: string }
+	}
+}
+export interface GDDTypeNumberSelect extends GDDSchemaPropertyNumber {
+	gddType: 'select'
+	enum: number[]
+	gddOptions: {
+		labels: { [key: string]: string }
+	}
+}
+export interface GDDTypeIntegerSelect extends GDDSchemaPropertyInteger {
+	gddType: 'select'
+	enum: number[]
+	gddOptions: {
+		labels: { [key: string]: string }
+	}
+}
+export interface GDDTypeColorRRGGBB extends GDDSchemaPropertyString {
+	gddType: 'color-rrggbb'
+	pattern: '^#[0-9a-f]{6}$'
+}
+export interface GDDTypePercentage extends GDDSchemaPropertyNumber {
+	gddType: 'percentage'
+}
+export interface GDDTypeDurationMs extends GDDSchemaPropertyNumber {
+	gddType: 'duration-ms'
 }
