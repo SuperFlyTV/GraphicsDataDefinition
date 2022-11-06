@@ -1,6 +1,6 @@
 # GraphicsDataDefinition javascript library
 
-This library contains a few useful tools for javascript developers.
+This library contains a few useful tools for javascript developers when working with the [Graphics Data Definition](https://github.com/SuperFlyTV/GraphicsDataDefinition).
 It can be used in the browser or Node.js.
 
 

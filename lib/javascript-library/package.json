@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "homepage": "https://github.com/SuperFlyTV/GraphicsDataDefinition",
   "scripts": {
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
