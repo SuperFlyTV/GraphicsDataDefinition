@@ -19,7 +19,14 @@ export function validateData(gddSchema: GDDSchema, data: unknown): string | null
 
 	return null
 }
-export function getDefaultDataFromSchema(gddSchema: GDDSchemaProperty, prefilledData: unknown, key: string): any {
+export function getDefaultDataFromSchema(gddSchema: GDDSchemaProperty, prefilledData?: unknown): any {
+	return getDefaultDataFromSchemaInternal(gddSchema, prefilledData, '')
+}
+function getDefaultDataFromSchemaInternal(
+	gddSchema: GDDSchemaProperty,
+	prefilledData: unknown | undefined,
+	key: string
+): any {
 	// Note: this function assumes that the schema provided has been validated by validateSchema()
 
 	if (gddSchema.type === 'object') {
@@ -27,14 +34,14 @@ export function getDefaultDataFromSchema(gddSchema: GDDSchemaProperty, prefilled
 			[key: string]: any
 		}
 		for (const [subKey, subSchema] of Object.entries(gddSchema.properties)) {
-			const subData = getDefaultDataFromSchema(subSchema, dataObject[subKey], key + '.' + subKey)
+			const subData = getDefaultDataFromSchemaInternal(subSchema, dataObject[subKey], key + '.' + subKey)
 			if (subData !== undefined) dataObject[subKey] = subData
 		}
 		return dataObject
 	} else if (gddSchema.type === 'array') {
 		const dataArray = clone(prefilledData ?? gddSchema.default ?? []) as any[]
 		for (let index = 0; index < dataArray.length; index++) {
-			dataArray[index] = getDefaultDataFromSchema(gddSchema.items, dataArray[index], key + `[${index}]`)
+			dataArray[index] = getDefaultDataFromSchemaInternal(gddSchema.items, dataArray[index], key + `[${index}]`)
 		}
 		return dataArray
 	} else {

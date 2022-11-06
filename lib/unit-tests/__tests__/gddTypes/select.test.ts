@@ -60,7 +60,7 @@ test('gddType: select', async () => {
 				f0: {
 					type: 'boolean', // not supported
 					gddType: 'select',
-				},
+				} as any,
 			},
 		})
 	).toMatch(/is not.*string,number,integer/)
@@ -82,12 +82,42 @@ test('gddType: select', async () => {
 			type: 'object',
 			properties: {
 				f0: {
+					type: 'string',
+					enum: ['one', 'two', 'three'],
+					gddType: 'select',
+					gddOptions: {
+						// labels missing
+					} as any,
+				},
+			},
+		})
+	).toMatch(/require.*labels/)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {
+				f0: {
+					type: 'integer',
+					enum: [1, 2, 3],
+					gddType: 'select',
+					gddOptions: {
+						// labels missing
+					} as any,
+				},
+			},
+		})
+	).toMatch(/require.*labels/)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {
+				f0: {
 					type: 'number',
 					enum: [1.2, 3.5, 9.0],
 					gddType: 'select',
 					gddOptions: {
 						// labels missing
-					},
+					} as any,
 				},
 			},
 		})
@@ -113,7 +143,7 @@ test('gddType: select', async () => {
 			properties: {
 				f0: {
 					type: 'string',
-					enum: [1, 2, 3], // wrong enum types
+					enum: [1, 2, 3] as any, // wrong enum types
 					gddType: 'select',
 					gddOptions: {
 						labels: { s: 'Small', m: 'Medium', l: 'Large' },
@@ -158,7 +188,7 @@ test('gddType: select', async () => {
 			properties: {
 				f0: {
 					type: 'number',
-					enum: ['a', 'b', 'c'], // wrong enum types
+					enum: ['a', 'b', 'c'] as any, // wrong enum types
 					gddType: 'select',
 					gddOptions: {
 						labels: { s: 'Small', m: 'Medium', l: 'Large' },

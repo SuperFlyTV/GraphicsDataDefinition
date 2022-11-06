@@ -98,7 +98,7 @@ export interface GDDTypeFilePathImagePath extends GDDSchemaPropertyString {
 }
 export interface GDDTypeStringSelect extends GDDSchemaPropertyString {
 	gddType: 'select'
-	enum: []
+	enum: string[]
 	gddOptions: {
 		labels: { [key: string]: string }
 	}

@@ -10,7 +10,12 @@ export async function setupValidator(): Promise<SchemaValidator> {
 	const { validate, cache } = await setupSchemaValidator({
 		getCache: async () => {
 			if (await fileExists(cachePath)) {
-				return JSON.parse(await fs.promises.readFile(cachePath, 'utf-8'))
+				const fileContents = await fs.promises.readFile(cachePath, 'utf-8')
+				try {
+					return JSON.parse(fileContents)
+				} catch {
+					return {}
+				}
 			} else return {}
 		},
 		fetch: async (url: string) => {

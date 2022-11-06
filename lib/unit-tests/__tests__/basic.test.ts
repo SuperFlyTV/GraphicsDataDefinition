@@ -13,10 +13,12 @@ describe('Schema - Basic types', () => {
 		const validateSchema = await setupValidator()
 
 		// Basic
-		expect(validateSchema(
-			// @ts-expect-error bad type
-			123
-		)).toBeTruthy()
+		expect(
+			validateSchema(
+				// @ts-expect-error bad type
+				123
+			)
+		).toBeTruthy()
 
 		// Minimal object:
 		expect(
