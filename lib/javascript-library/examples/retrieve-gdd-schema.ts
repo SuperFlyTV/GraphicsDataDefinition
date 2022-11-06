@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import fetch from 'node-fetch'
-import { GDDSchema } from './types'
+import { GDDSchema } from '../src/lib/types'
 
 export async function retrieveGDDSchema(htmlFilePath: string): Promise<GDDSchema> {
 	const folderOfHTMLFile = path.dirname(htmlFilePath)
