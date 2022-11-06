@@ -10,7 +10,7 @@ test('gddType: non-standard', async () => {
 				f0: {
 					type: 'string',
 					gddType: '__external-type',
-				},
+				} as any,
 			},
 		})
 	).toBe(null)
@@ -21,7 +21,7 @@ test('gddType: non-standard', async () => {
 				f0: {
 					type: 'number',
 					gddType: '__external-type',
-				},
+				} as any,
 			},
 		})
 	).toBe(null)
@@ -35,7 +35,7 @@ test('gddType: non-standard', async () => {
 					gddOptions: {
 						myProp: 123,
 					},
-				},
+				} as any,
 			},
 		})
 	).toBe(null)

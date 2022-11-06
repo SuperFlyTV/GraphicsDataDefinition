@@ -47,7 +47,7 @@ test('gddType: image-file-path', async () => {
 					type: 'string',
 					gddType: 'file-path/image-path',
 					gddOptions: {
-						extensions: [123], // bad type
+						extensions: [123] as any, // bad type
 					},
 				},
 			},
