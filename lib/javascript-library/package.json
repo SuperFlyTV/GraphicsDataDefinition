@@ -28,5 +28,10 @@
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "engines": {
     "node": ">=14"
-  }
+  },
+  "files": [
+		"/dist",
+		"/README.md",
+		"/LICENSE"
+	]
 }
