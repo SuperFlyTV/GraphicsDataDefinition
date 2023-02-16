@@ -1,7 +1,14 @@
 import { Schema, Validator } from 'jsonschema'
 import { GDDSchema } from './types'
 
-export type SchemaValidator = (schema: GDDSchema) => string | null
+/**
+ * Validates a GDD Schema.
+ * @returns null if the Schema is valid. A string describing the error if not.
+ */
+export type SchemaValidator = (
+	/** The Schema that is to be validated */
+	schema: GDDSchema
+	) => string | null
 export type ValidatorCache = { [key: string]: Schema }
 let cachedValidator: undefined | SchemaValidator = undefined
 
