@@ -4,6 +4,8 @@ _NOTE: This is a draft!_
 
 _Everything in this document is subject to change and should be considered a proposal only!_
 
+[Link to this repo on github](https://github.com/superflytv/GraphicsDataDefinition/)
+
 **Table of contents**
 
 - [Getting started](#getting-started)
@@ -14,9 +16,13 @@ _Everything in this document is subject to change and should be considered a pro
 
 ## Getting started
 
-The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file.
 
-**[A live demo of a Reference GUI can be found here!](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)**
+[Examples of GDD-templates](https://github.com/SuperFlyTV/GraphicsDataDefinition/tree/master/examples)
+
+[Live demo of a Reference GUI](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
+
+
+The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file:
 
 **HTML Graphics file, "example.html":**
 
@@ -34,7 +40,7 @@ The `src=""` is a relative path to the Schema json file.
     ></script>
   </head>
   <body>
-    *** Content goes here ***
+    *** HTML content ***
   </body>
 </html>
 ```
@@ -94,7 +100,7 @@ The `<script name="graphics-data-definition">` tag can also contain the GDD Sche
     </script>
   </head>
   <body>
-    *** Content goes here ***
+    *** HTML content ***
   </body>
 </html>
 ```
