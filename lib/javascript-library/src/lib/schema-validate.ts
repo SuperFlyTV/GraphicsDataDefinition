@@ -8,7 +8,7 @@ import { GDDSchema } from './types'
 export type SchemaValidator = (
 	/** The Schema that is to be validated */
 	schema: GDDSchema
-	) => string | null
+) => string | null
 export type ValidatorCache = { [key: string]: Schema }
 let cachedValidator: undefined | SchemaValidator = undefined
 

@@ -47,8 +47,8 @@
       tableContainer.style.opacity = "0";
 
       function update(data) {
-	    if (typeof data === "string") data = JSON.parse(data)
-		
+	      if (typeof data === "string") data = JSON.parse(data)
+
         let html = "<table>";
 
         for (const person of data.people) {
@@ -60,8 +60,6 @@
       }
       function row(person) {
         return `<tr style="color: ${person.favoriteColor || 'inherit'}"><td>${person.name}</td><td>${person.age}</td></tr>`;
-
-        
       }
       function play() {
         setTimeout(() => {
