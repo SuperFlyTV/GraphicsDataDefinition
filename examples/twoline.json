@@ -1,9 +1,16 @@
 {
     "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
-    "title": "One-Line GFX Template",
+    "title": "Two-Line GFX Template",
     "type": "object",
     "properties": {
         "text0": {
+            "description": "Text to be displayed",
+            "type": "string",
+            "maxLength": 50,
+            "gddType": "single-line",
+            "gddOptions": {}
+        },
+		"text1": {
             "description": "Text to be displayed",
             "type": "string",
             "maxLength": 50,

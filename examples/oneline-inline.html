@@ -11,9 +11,7 @@
       "properties": {
           "text0": {
               "description": "Text to be displayed",
-              "type": [
-                  "string"
-              ],
+              "type": "string",
               "maxLength": 50,
               "gddType": "single-line",
               "gddOptions": {}
@@ -73,6 +71,7 @@
       text0Container.style.width = "0";
 
       function update(data) {
+	    if (typeof data === "string") data = JSON.parse(data)
         text0Content.innerHTML = data.text0;
         text0Container.style.height = text0Content.offsetHeight + "px";
       }

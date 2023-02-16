@@ -3,7 +3,7 @@
   <head>
     <title>Two-Line GFX Template</title>
     <!-- This tag references the metadata -->
-    <script name="graphics-data-definition" type="application/json+gdd" src="oneline.json" ></script>
+    <script name="graphics-data-definition" type="application/json+gdd" src="twoline.json" ></script>
 
     <style>
       body {
@@ -74,6 +74,7 @@
       text1Container.style.width = "0";
 
       function update(data) {
+	    if (typeof data === "string") data = JSON.parse(data)
         text0Content.innerHTML = data.text0;
         text0Container.style.height = text0Content.offsetHeight + "px";
         if (data.text1) {

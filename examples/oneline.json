@@ -13,5 +13,13 @@
     },
     "required": [
         "text0"
-    ]
+    ],
+    "gddPlayoutOptions": {
+        "playout": {
+            "casparcg": {
+                "channel": 1,
+                "layer": 100
+            }
+        }
+    }
 }

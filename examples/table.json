@@ -23,7 +23,8 @@
                     "favoriteColor": {
                         "label": "Favorite Color",
                         "type": "string",
-                        "gddType": "color-rrggbb"
+                        "gddType": "color-rrggbb",
+						"pattern": "^#[0-9a-f]{6}$"
                     }
                 }
             }
@@ -31,5 +32,10 @@
     },
     "required": [
         "people"
-    ]
+    ],
+    "gddPlayoutOptions": {
+        "client": {
+            "duration": null
+        }
+    }
 }
