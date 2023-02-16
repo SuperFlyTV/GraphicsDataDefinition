@@ -50,7 +50,7 @@ const componentAny = (props) => {
 };
 
 const EditProperty = (props) => {
-  const label = props.schema.label || props.property;
+  const label = props.schema.title || props.property;
   const description = props.schema.description;
 
   if (props.inTableRow || props.inTableCell) {
@@ -157,7 +157,7 @@ const propertyArray = (props) => {
             {columns.map(([columnKey, column]) => {
               return (
                 <th className="header" key={columnKey}>
-                  <div className="label">{column.label || columnKey}</div>
+                  <div className="label">{column.title || columnKey}</div>
                   {column.description && (
                     <div className="description">{column.description}</div>
                   )}
