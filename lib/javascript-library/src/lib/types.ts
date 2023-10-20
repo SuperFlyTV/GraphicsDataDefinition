@@ -75,6 +75,7 @@ export type GDDTypes =
 	| GDDTypeNumberSelect
 	| GDDTypeIntegerSelect
 	| GDDTypeColorRRGGBB
+	| GDDTypeColorRRGGBBAA
 	| GDDTypePercentage
 	| GDDTypeDurationMs
 
@@ -120,6 +121,10 @@ export interface GDDTypeIntegerSelect extends GDDSchemaPropertyInteger {
 export interface GDDTypeColorRRGGBB extends GDDSchemaPropertyString {
 	gddType: 'color-rrggbb'
 	pattern: '^#[0-9a-f]{6}$'
+}
+export interface GDDTypeColorRRGGBBAA extends GDDSchemaPropertyString {
+	gddType: 'color-rrggbbaa'
+	pattern: '^#[0-9a-f]{8}$'
 }
 export interface GDDTypePercentage extends GDDSchemaPropertyNumber {
 	gddType: 'percentage'

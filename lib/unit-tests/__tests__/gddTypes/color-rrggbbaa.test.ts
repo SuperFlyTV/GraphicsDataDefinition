@@ -5,7 +5,7 @@ import * as Lib from '../../../javascript-library/src/index'
 import { GDDSchema } from '../../../javascript-library/src/index'
 
 test('gddType: color-rrggbbaa', async () => {
-	const validateSchema = await setupValidator()
+	const validateSchema = (await setupValidator()).validate
 
 	expect(
 		validateSchema({
