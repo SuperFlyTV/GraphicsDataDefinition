@@ -27,6 +27,15 @@
       "type": "string",
       "description": "A description GFX-template. Used for informational purposes only."
     },
+    "authorName": {
+      "type": "string",
+      "description": "Name of the author"
+    },
+    "authorEmail": {
+      "type": "string",
+      "description": "Email to the author",
+      "format": "email"
+    },
     "properties": {
       "type": "object",
       "patternProperties": {
