@@ -16,11 +16,9 @@ _Everything in this document is subject to change and should be considered a pro
 
 ## Getting started
 
-
 [Examples of GDD-templates](https://github.com/SuperFlyTV/GraphicsDataDefinition/tree/master/examples)
 
 [Live demo of a Reference GUI](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
-
 
 The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file:
 
@@ -302,9 +300,9 @@ Lets the user pick a file from disk
 ```typescript
 {
   "type": "string",
-  "gddType": "file-path"
+  "gddType": "file-path",
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['txt', 'json']
+    "extensions": ["txt", "json"] // [Optional, Array of strings] . Limit which files can be chosen by the user
   }
 }
 ```
@@ -320,7 +318,7 @@ Lets the user pick an image file from disk
   "type": "string",
   "gddType": "file-path/image-path",
   "gddOptions": {
-    "extensions": Array<string> // [Optional] Limit which files can be chosen by the user. Example: ['jpg', 'png']
+    "extensions": ["jpg", "png"] // [Optional, Array of strings] Limit which files can be chosen by the user.
   }
 }
 ```
@@ -342,11 +340,12 @@ Please note that the `type` for this can be either of `"string"`, `"integer"` or
     "labels": {
       "one": "Label for one",
       "two": "Label for two",
-      "three": "Label for three",
+      "three": "Label for three"
     }
   }
 }
 ```
+
 ```json
 {
   "type": "integer",
@@ -357,6 +356,7 @@ Please note that the `type` for this can be either of `"string"`, `"integer"` or
   }
 }
 ```
+
 ```json
 {
   "type": "number",
@@ -415,6 +415,7 @@ The value is stored as a number in milliseconds, eg "1m23s" -> `83000`
 Under the GDD schema, it is allowed to extend the offial GDD Types listed above with your own, custom GDD Types. Thanks to the graceful degradation of the GDD Types, a schema containing custom GDD Types is still a valid GDD Schema and will work in any GUI, the unsupported GDD Types will simply degrade to their closest type.
 
 Example:
+
 ```typescript
 {
   "type": "string",
@@ -430,14 +431,12 @@ To degrade gracefully, it is recommended that you follow these practices when im
 
 ```javascript
 function determineComponent(prop) {
-
   // List of supported GUI components, starting with "longest gddType" first:
   if (prop.gddType.match("file-path/image-path"))
     return componentImagePicker(prop, allowOptional);
   if (prop.gddType.match("file-path"))
     return componentFilePicker(prop, allowOptional);
-  if (prop.gddType.match("rrggbb"))
-    return componentRRGGBB(prop, allowOptional);
+  if (prop.gddType.match("rrggbb")) return componentRRGGBB(prop, allowOptional);
 
   // Fall back to handle the basic types:
   const basicType = Array.isArray(prop.type) ? prop.type[0] : prop.type;
@@ -447,14 +446,13 @@ function determineComponent(prop) {
   if (basicType === "integer") return componentInteger(prop);
   if (basicType === "array") return componentArray(prop);
   if (basicType === "object") return componentObject(prop);
-  if (basicType === "null") return null
+  if (basicType === "null") return null;
 
   return null;
 }
 ```
 
 Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
-
 
 ## Playout Options
 
@@ -512,6 +510,7 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
   }
 }
 ```
+
 Details on the CasparCG XML format are described in [Appendix: CasparCG XML](/doc/appendix/casparcg-xml.md)
 
 Details for the device-specific options are described in [Appendix: Playout Options](/doc/appendix/playout-options.md)
