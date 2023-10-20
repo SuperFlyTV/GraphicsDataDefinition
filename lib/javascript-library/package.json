@@ -1,6 +1,6 @@
 {
   "name": "graphics-data-definition",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "homepage": "https://github.com/SuperFlyTV/GraphicsDataDefinition",
