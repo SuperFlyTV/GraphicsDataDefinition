@@ -86,6 +86,7 @@ describe('Schema - Basic types', () => {
 			validateSchema({
 				type: 'object',
 				properties: {},
+				// @ts-expect-error number, instead of string
 				authorName: 123, // bad type
 			})
 		).toMatch(/not.*string/)

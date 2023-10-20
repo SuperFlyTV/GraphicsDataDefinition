@@ -23,6 +23,10 @@ export interface GDDSchema extends GDDSchemaPropertyObject {
 			}
 		}
 	}
+	/** Name of the author. */
+	authorName?: string
+	/** Email to the author. */
+	authorEmail?: string
 }
 
 export type GDDSchemaProperty =
