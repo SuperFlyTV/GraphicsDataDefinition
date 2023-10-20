@@ -35,7 +35,14 @@ export async function setupValidator(): Promise<{ validate: SchemaValidator; cac
 
 	if (cache) {
 		// Store cache to disk:
-		await fs.promises.writeFile(cachePath, JSON.stringify(cache), 'utf-8')
+		const existingFileContents = await fs.promises.readFile(cachePath, 'utf-8').catch((e) => {
+			if (e.code === 'ENOENT') return ''
+			else throw e
+		})
+		const newFileContents = JSON.stringify(cache)
+		if (newFileContents !== existingFileContents) {
+			await fs.promises.writeFile(cachePath, newFileContents, 'utf-8')
+		}
 	}
 
 	return { validate, cache }
