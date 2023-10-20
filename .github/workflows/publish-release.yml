@@ -1,0 +1,41 @@
+name: Javascript-library - Publish release to NPM
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+
+  publish-prerelease:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Javascript library - Install
+        working-directory: ./lib/javascript-library
+        run: yarn install
+        env:
+          CI: true
+      - name: Javascript library - Build
+        working-directory: ./lib/javascript-library
+        run: yarn build
+        env:
+          CI: true
+      - name: Publish to NPM
+        working-directory: ./lib/javascript-library
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          yarn publish --access=public --new-version=$NEW_VERSION --network-timeout 100000 --tag latest
+        env:
+          CI: true
+
