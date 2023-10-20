@@ -4,6 +4,10 @@
   "main": "dist/index.js",
   "license": "MIT",
   "homepage": "https://github.com/SuperFlyTV/GraphicsDataDefinition",
+  "repository": {
+		"type": "git",
+		"url": "git+https://github.com/SuperFlyTV/GraphicsDataDefinition.git"
+	},
   "scripts": {
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
