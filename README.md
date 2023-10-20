@@ -1,10 +1,6 @@
 # GDD - Graphics Data Definition
 
-_NOTE: This is a draft!_
-
-_Everything in this document is subject to change and should be considered a proposal only!_
-
-[Link to this repo on github](https://github.com/superflytv/GraphicsDataDefinition/)
+[Link to this repo on github](https://github.com/superflytv/GraphicsDataDefinition/).
 
 **Table of contents**
 
@@ -16,9 +12,11 @@ _Everything in this document is subject to change and should be considered a pro
 
 ## Getting started
 
-[Examples of GDD-templates](https://github.com/SuperFlyTV/GraphicsDataDefinition/tree/master/examples)
+* [Examples of GDD-templates](https://github.com/SuperFlyTV/GraphicsDataDefinition/tree/master/examples)
 
-[Live demo of a Reference GUI](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
+* [Live demo of a Reference GUI](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
+
+* [CHANGELOG](/CHANGELOG.md)
 
 The GDD Schema can either be defined in a separate JSON-file, or inline in the HTML-template-file:
 
@@ -467,6 +465,8 @@ function determineComponent(prop) {
 ```
 
 Please have a look at a [reference GUI implementation here](/blob/main/reference-gui/src/gdd-gui.jsx), and [its live demo here.](https://superflytv.github.io/GraphicsDataDefinition/lib/reference-gui/dist/)
+
+Also, give the [CHANGELOG](/CHANGELOG.md) a read.
 
 ## Playout Options
 
