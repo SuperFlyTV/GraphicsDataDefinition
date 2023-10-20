@@ -21,6 +21,40 @@
         }
       }
     },
+    "render": {
+      "type": "object",
+      "properties": {
+        "resolutions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "patternProperties": {
+              "width|height|framerate": {
+                "type": ["number", "object"],
+                "allOf": [
+                  {
+                    "if": {
+                      "type": "object"
+                    },
+                    "then": {
+                      "properties": {
+                        "min": {
+                          "type": "number"
+                        },
+                        "max": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "playout": {
       "type": "object"
     }

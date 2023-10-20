@@ -109,6 +109,116 @@ test('gddPlayoutOptions.client', async () => {
 		})
 	).toMatch(/is not.*json/)
 })
+test('gddPlayoutOptions.render', async () => {
+	const validateSchema = (await setupValidator()).validate
+
+	// Minimal object:
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {},
+			},
+		})
+	).toBe(null)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [], // empty is not allowed
+				},
+			},
+		})
+	).toMatch(/min.*length/)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [{ width: 123 }],
+				},
+			},
+		})
+	).toBe(null)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [
+						{
+							// @ts-expect-error string should be number
+							width: '123', // bad type
+						},
+					],
+				},
+			},
+		})
+	).toMatch(/is not.*number,object/)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [{ width: { min: 100, max: 9999 } }],
+				},
+			},
+		})
+	).toBe(null)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [
+						{
+							width: {
+								// @ts-expect-error string should be number
+								max: 'two', // bad type
+							},
+						},
+					],
+				},
+			},
+		})
+	).toMatch(/is not.*number/)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [{ width: { max: 9000 }, height: 500, framerate: 50 }],
+				},
+			},
+		})
+	).toBe(null)
+	expect(
+		validateSchema({
+			type: 'object',
+			properties: {},
+			gddPlayoutOptions: {
+				render: {
+					resolutions: [
+						{
+							width: { max: 9000 },
+							height: 500,
+							// @ts-expect-error string should be number
+							framerate: '50', // bad type
+						},
+					],
+				},
+			},
+		})
+	).toMatch(/is not.*number/)
+})
 test('gddPlayoutOptions.playout', async () => {
 	const validateSchema = (await setupValidator()).validate
 

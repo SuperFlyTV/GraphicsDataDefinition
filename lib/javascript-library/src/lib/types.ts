@@ -3,9 +3,67 @@ import { Schema } from 'jsonschema'
 export interface GDDSchema extends GDDSchemaPropertyObject {
 	gddPlayoutOptions?: {
 		client?: {
+			/**
+			 * (Integer)
+			 * The suggested duration of the template (in milliseconds)
+			 * null means that it is manually taken out
+			 * undefined should be treated as null
+			 * (This is ignored if steps=0)
+			 * Defaults to null
+			 */
 			duration?: number | null
+			/**
+			 * Number of steps in the template
+			 * 1 means that there are no steps (ie there's only "the default step").
+			 * 2 or more means that it can be "stepped" (ie 2 means it can be stepped once).
+			 * -1 means "infinite" number of steps.
+			 * 0 means that the template is "volatile" / "fire and forget" (template really has no duration, like a bumper).
+			 * Defaults to 1
+			 */
 			steps?: number
+			/**
+			 * How the data should be formatted.
+			 * This is mostly used for the older CasparCG flash-based xml data format.
+			 * Defaults to "json"
+			 */
 			dataformat?: 'json' | 'casparcg-xml'
+		}
+
+		/** This object contains options related to the rendering of the GFX template */
+		render?: {
+			/**
+			 * This property contains an array of the supported resolutions of the GFX Template.
+			 * The array must contain at least one resolution.
+			 * This can be used by the client to determine whether a template is compatible with the current renderer or not.
+			 * Examples:
+			 * * A template which only supports a fixed resolution and framerate:
+			 *   "resolutions": [{ "width": 1280, "height": 720, "framerate": 50 }]
+			 * * A template which supports 720p50 and 1080p50:
+			 *   "resolutions": [{ "width": 1280, "height": 720, "framerate": 50 }, { "width": 1920, "height": 1080, "framerate": 50 }]
+			 * * A template which supports any resolution above 500x500 (and any framerate):
+			 *   "resolutions": [{ "width": { min: 500 }, "height": { min: 500 } }]
+			 *
+			 */
+			resolutions?: {
+				width?:
+					| {
+							min?: number
+							max?: number
+					  }
+					| number
+				height?:
+					| {
+							min?: number
+							max?: number
+					  }
+					| number
+				framerate?:
+					| {
+							min?: number
+							max?: number
+					  }
+					| number
+			}[]
 		}
 
 		/** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */

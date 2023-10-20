@@ -527,6 +527,39 @@ _Note: All of the properties inside of `gddPlayoutOptions` are optional._
       "dataformat": "json" | "casparcg-xml"
     },
 
+    /** This object contains options related to the rendering of the GFX template */
+    "render": {
+      /**
+       * This property contains an array of the supported resolutions of the GFX Template.
+       * The array must contain at least one resolution.
+       * This can be used by the client to determine whether a template is compatible with the current renderer or not.
+       * Examples:
+       * * A template which only supports a fixed resolution and framerate:
+       *   "resolutions": [{ "width": 1280, "height": 720, "framerate": 50 }]
+       * * A template which supports 720p50 and 1080p50:
+       *   "resolutions": [{ "width": 1280, "height": 720, "framerate": 50 }, { "width": 1920, "height": 1080, "framerate": 50 }]
+       * * A template which supports any resolution above 500x500 (and any framerate):
+       *   "resolutions": [{ "width": { min: 500 }, "height": { min: 500 } }]
+       *
+       */
+      "resolutions": [
+        {
+          "width": {
+            "min": number
+            "max": number
+          } | number,
+          "height": {
+            "min": number
+            "max": number
+          } | number,
+          "framerate": {
+            "min": number
+            "max": number
+          } | number,
+        }
+      ]
+    },
+
     /** This object contains specific options for the various playout server types (CasparCG, Viz, vMix etc..) */
     "playout": {
       "**type-of-device**": {
