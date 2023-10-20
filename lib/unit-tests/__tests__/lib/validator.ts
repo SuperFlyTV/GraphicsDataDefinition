@@ -2,11 +2,10 @@ import * as path from 'path'
 import * as fs from 'fs'
 import fetch from 'node-fetch'
 /* eslint-disable node/no-unpublished-import */
-import { SchemaValidator, setupSchemaValidator } from '../../../javascript-library'
+import { SchemaValidator, ValidatorCache, setupSchemaValidator } from '../../../javascript-library'
 
-export async function setupValidator(): Promise<SchemaValidator> {
-	const cachePath = path.resolve('./__cache.json')
-
+export async function setupValidator(): Promise<{ validate: SchemaValidator; cache: ValidatorCache | null }> {
+	const cachePath = getCachePath()
 	const { validate, cache } = await setupSchemaValidator({
 		getCache: async () => {
 			if (await fileExists(cachePath)) {
@@ -39,7 +38,15 @@ export async function setupValidator(): Promise<SchemaValidator> {
 		await fs.promises.writeFile(cachePath, JSON.stringify(cache), 'utf-8')
 	}
 
-	return validate
+	return { validate, cache }
+}
+
+export async function clearValidatorCache(): Promise<void> {
+	await fs.promises.unlink(getCachePath())
+}
+
+function getCachePath(): string {
+	return path.resolve('./__cache.json')
 }
 
 async function fileExists(filePath: string): Promise<boolean> {

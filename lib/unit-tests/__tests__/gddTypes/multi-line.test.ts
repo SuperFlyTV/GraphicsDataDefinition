@@ -1,7 +1,7 @@
 import { setupValidator } from '../lib/validator'
 
 test('gddType: multi-line', async () => {
-	const validateSchema = await setupValidator()
+	const validateSchema = (await setupValidator()).validate
 
 	expect(
 		validateSchema({

@@ -1,7 +1,7 @@
 import { setupValidator } from '../lib/validator'
 
 test('gddType: image-file-path', async () => {
-	const validateSchema = await setupValidator()
+	const validateSchema = (await setupValidator()).validate
 
 	expect(
 		validateSchema({

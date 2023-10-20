@@ -1,7 +1,7 @@
 import { setupValidator } from './lib/validator'
 
 test('gddPlayoutOptions.client', async () => {
-	const validateSchema = await setupValidator()
+	const validateSchema = (await setupValidator()).validate
 
 	// Minimal object:
 	expect(
@@ -110,7 +110,7 @@ test('gddPlayoutOptions.client', async () => {
 	).toMatch(/is not.*json/)
 })
 test('gddPlayoutOptions.playout', async () => {
-	const validateSchema = await setupValidator()
+	const validateSchema = (await setupValidator()).validate
 
 	// Minimal object:
 	expect(

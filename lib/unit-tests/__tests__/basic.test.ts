@@ -10,7 +10,7 @@ describe('Schema - Basic types', () => {
 		30 * 1000
 	)
 	test('Basic', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		// Basic
 		expect(
@@ -102,7 +102,7 @@ describe('Schema - Basic types', () => {
 		).toBe(null)
 	})
 	test('Bad property', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -121,7 +121,7 @@ describe('Schema - Basic types', () => {
 	// "object"
 
 	test('Property: boolean', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -147,7 +147,7 @@ describe('Schema - Basic types', () => {
 		).toMatch(/not.*boolean/)
 	})
 	test('Property: string', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -177,7 +177,7 @@ describe('Schema - Basic types', () => {
 		// "pattern": Regular Expression,
 	})
 	test('Property: number', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -209,7 +209,7 @@ describe('Schema - Basic types', () => {
 		// "exclusiveMinimum": number,
 	})
 	test('Property: integer', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -241,7 +241,7 @@ describe('Schema - Basic types', () => {
 		// "exclusiveMinimum": number,
 	})
 	test('Property: array', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
@@ -320,7 +320,7 @@ describe('Schema - Basic types', () => {
 		// "minContains": number
 	})
 	test('Property: object', async () => {
-		const validateSchema = await setupValidator()
+		const validateSchema = (await setupValidator()).validate
 
 		expect(
 			validateSchema({
