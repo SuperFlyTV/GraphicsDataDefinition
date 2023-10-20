@@ -191,6 +191,6 @@ export interface GDDTypeColorRRGGBBAA extends GDDSchemaPropertyString {
 export interface GDDTypePercentage extends GDDSchemaPropertyNumber {
 	gddType: 'percentage'
 }
-export interface GDDTypeDurationMs extends GDDSchemaPropertyNumber {
+export interface GDDTypeDurationMs extends GDDSchemaPropertyInteger {
 	gddType: 'duration-ms'
 }
