@@ -12,6 +12,9 @@ npm install graphics-data-definition
 
 ## How to use
 
+
+### Validating schema and data
+
 ```typescript
 // Typescript
 import {
@@ -69,3 +72,49 @@ console.log('Default Data from schema: ' + JSON.stringify(defaultData))
 
 ```
 
+
+
+### Building a GUI
+
+_See [Reference-GUI](https://github.com/SuperFlyTV/GraphicsDataDefinition/tree/master/lib/reference-gui) for example implementation,_
+
+```typescript
+// Typescript
+import {
+    validateData,
+    getDefaultDataFromSchema,
+    setupSchemaValidator,
+    GDDSchema,
+    GDDTypes
+} from 'graphics-data-definition'
+
+
+function drawGUIComponent(schema: GDDSchemaProperty) {
+    const gddSchema = schema as GDDTypes
+
+    // Handle GDD Types:
+    if (gddSchema.type === 'string') {
+        if (gddSchema.gddType === 'single-line') return drawGUIComponentSingleLine(innerProps)
+        else if (gddSchema.gddType === 'multi-line') return drawGUIComponentMultiLine(innerProps)
+        // etc ...
+    } else if (gddSchema.type === 'integer') {
+		if (gddSchema.gddType === 'select') return drawGUIComponentSelect(innerProps)
+        // etc ...
+    } // else if () etc ...
+
+
+    // Handle basic types:
+    const basicType = getBasicType(schema.type)
+
+    if (basicType === 'boolean') return drawGUIComponentBoolean(innerProps)
+    if (basicType === 'string') return drawGUIComponentString(innerProps)
+    if (basicType === 'number') return drawGUIComponentNumber(innerProps)
+    if (basicType === 'integer') return drawGUIComponentInteger(innerProps)
+    if (basicType === 'array') return drawGUIComponentArray(innerProps)
+    if (basicType === 'object') return drawGUIComponentObject(innerProps)
+
+    // Fallback:
+    return drawGUIComponentUnknown({ ...innerProps, basicType })
+}
+
+``````

@@ -437,6 +437,16 @@ Example:
 
 ## For GUI Developers
 
+### Getting started
+
+```bash
+npm install graphics-data-definition
+```
+
+See [README for the npm-library](https://www.npmjs.com/package/graphics-data-definition) for how to use.
+
+### About implementing GUIs
+
 When implementing a GUI to support the GDD definitions, you don't have to implement support for all GDD Types - since the GDD Types are designed to degrade gracefully. The only types that are mandatory to implement are the basic types `"boolean"`, `"string"`, `"number"`, `"integer"`, `"array"`and `"object"`.
 
 To degrade gracefully, it is recommended that you follow these practices when implementing the GUI:
