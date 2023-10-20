@@ -384,6 +384,20 @@ Let's the user pick a color.
 
 The value is stored as a string on the form "#RRGGBB", eg `"#61138e"`.
 
+### Color - RRGGBBAA
+
+Let's the user pick a color with transparency.
+
+```typescript
+{
+  "type": "string",
+  "pattern": "^#[0-9a-f]{8}$",
+  "gddType": "color-rrggbbaa"
+}
+```
+
+The value is stored as a string on the form "#RRGGBBAA", eg `"#61138eff"`.
+
 ### Percentage
 
 A number presented as a pecentage
