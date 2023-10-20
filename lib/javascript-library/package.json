@@ -1,6 +1,6 @@
 {
   "name": "graphics-data-definition",
-  "version": "0.1.0",
+  "version": "1.0.0-0",
   "main": "dist/index.js",
   "license": "MIT",
   "homepage": "https://github.com/SuperFlyTV/GraphicsDataDefinition",
@@ -8,7 +8,8 @@
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx .",
-    "release": "standard-version"
+    "release": "standard-version --release-as minor",
+    "release-patch": "standard-version --release-as patch"
   },
   "devDependencies": {
     "@sofie-automation/code-standard-preset": "^2.1.0",
@@ -30,8 +31,13 @@
     "node": ">=14"
   },
   "files": [
-		"/dist",
-		"/README.md",
-		"/LICENSE"
-	]
+    "/dist",
+    "/README.md",
+    "/LICENSE"
+  ],
+  "standard-version": {
+    "skip": {
+      "tag": true
+    }
+  }
 }
