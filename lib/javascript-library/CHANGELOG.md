@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.1.0 (2023-10-20)
+
+
+### Features
+
+* add authorName and authorEmail ([ea3e04b](https://github.com/SuperFlyTV/GraphicsDataDefinition/commit/ea3e04b4fcf44e00b93bd80fef0180d8ee96f3e8))
+* add gddPlayoutOptions.resolutions properties ([823e4a0](https://github.com/SuperFlyTV/GraphicsDataDefinition/commit/823e4a0f084822231d4e3d7fad13b58eeaf4069d))
+
+
 ## 1.0.0 (2023-10-20)
 
 
