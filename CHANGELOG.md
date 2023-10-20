@@ -20,7 +20,7 @@ _Internal changes, like typos or internal fixes to the json-schema are not liste
 * New **GDDType**: `color-rrggbbaa` [PR #16](https://github.com/SuperFlyTV/GraphicsDataDefinition/pull/16)
 * Optional properties `authorName` and `authorEmail` added, [PR #17](https://github.com/SuperFlyTV/GraphicsDataDefinition/pull/17)
 * Add `render.resolutions` property to the Schema. [PR #18](https://github.com/SuperFlyTV/GraphicsDataDefinition/pull/18)
-* Version 1.1.0 of the [javascript npm library](https://www.npmjs.com/package/graphics-data-definition) is released.
+* Version 1.1.1 of the [javascript npm library](https://www.npmjs.com/package/graphics-data-definition) is released.
 
 ## 2022-10-28
 
