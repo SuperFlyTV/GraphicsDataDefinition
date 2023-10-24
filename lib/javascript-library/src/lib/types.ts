@@ -157,6 +157,20 @@ export interface GDDTypeFilePathImagePath extends GDDSchemaPropertyString {
 	gddType: 'file-path/image-path'
 	gddOptions?: {
 		extensions?: string[]
+		size?: {
+			width?: {
+				min?: number
+				ideal?: number
+				max?: number
+				exact?: number
+			}
+			height?: {
+				min?: number
+				ideal?: number
+				max?: number
+				exact?: number
+			}
+		}
 	}
 }
 export interface GDDTypeStringSelect extends GDDSchemaPropertyString {
