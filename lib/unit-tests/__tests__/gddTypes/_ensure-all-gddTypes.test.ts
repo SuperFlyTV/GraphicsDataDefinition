@@ -58,7 +58,6 @@ test('Ensure that all GDDTypes in README exist and passes validation', async () 
 		for (const typeExample of typeExamples) {
 			let str = typeExample.replace(/^.+?\n/, '') // remove first line "```typescript"
 			str = str.replace(/```$/, '') // remove last line "```"
-			str = str.replace(/[Optional] \/\/.*/g, '') // Remove inline comments
 			str = str.replace(/\/\/.*/g, '') // Remove inline comments
 
 			const gddTypeNameMatch = str.match(/"gddType": "(.*)"/)
