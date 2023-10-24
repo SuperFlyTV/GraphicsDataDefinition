@@ -318,7 +318,24 @@ Lets the user pick an image file from disk
   "type": "string",
   "gddType": "file-path/image-path",
   "gddOptions": {
-    "extensions": ["jpg", "png"] // [Optional, Array of strings] Limit which files can be chosen by the user.
+    // [Optional, Array of strings] Limit which files can be chosen by the user.
+    "extensions": ["jpg", "png"],
+    // [Optional] Put limits the size of the image. (Client could possibly resize an image to fit)
+    // This is using the same type of definitions used to define webcam inputs: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#examples
+    "size": {
+      "width": {
+        "min": 1024,
+        "ideal": 1280,
+        "max": 1920
+        // "exact": 1280 // when used, `exact` equals to `min` === `max`
+      },
+      "height": {
+        "min": 576,
+        "ideal": 720,
+        "max": 1080
+        // "exact": 720 // when used, `exact` equals to `min` === `max`
+      }
+    }
   }
 }
 ```

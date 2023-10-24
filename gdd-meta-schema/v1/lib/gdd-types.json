@@ -71,6 +71,45 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "size": {
+                "type": "object",
+                "properties": {
+                  "width": {
+                    "type": "object",
+                    "properties": {
+                      "min": {
+                        "type": "integer"
+                      },
+                      "ideal": {
+                        "type": "integer"
+                      },
+                      "max": {
+                        "type": "integer"
+                      },
+                      "exact": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "height": {
+                    "type": "object",
+                    "properties": {
+                      "min": {
+                        "type": "integer"
+                      },
+                      "ideal": {
+                        "type": "integer"
+                      },
+                      "max": {
+                        "type": "integer"
+                      },
+                      "exact": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
