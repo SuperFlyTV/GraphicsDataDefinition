@@ -437,6 +437,40 @@ Example:
 }
 ```
 
+### Special GDD Type: "Invoke Action"
+
+Some templates support invoking custom functions during their life-time.
+This GDD Type should be rendered as a Button in the GUI so that the user can click it to invoke the action.
+
+
+Example:
+```typescript
+{
+  "title": string, // [Mandatory] A short title / label of the action
+  "description": "", // [Optional] A longer description of the action
+  "type": "null",
+  "gddType": "invoke-action",
+  "gddOptions": {
+    // [mandatory] Name of the function to execute/invoke in the template. Example: "triggerGoalAnimation"
+    "invokeFunction": string
+    // [optional] An array containing arguments provided to the function. Example: "myCustomHello(\"world\", $path)"
+    "invokeArguments": ["Zlatan Ibrahimovic", 11, "$$path", "$$data"]
+  }
+}
+```
+There are certain _special tokens_ that can be used in the `invokeArguments` array:
+
+* `"$$data"` is a special token which will be substituted at runtime with the full template data object.
+
+  This is useful when an action needs the latest data.
+
+* `"$$path"` is a special token which will be substituted at runtime with the [JSONPath](https://goessner.net/articles/JsonPath/) of the action.
+
+  This is useful when having an action inside an array, since this would cause multiple actions to render (one per row in the data).
+  An example of a path would be `myData.people[2]` for the action in the 3rd row of an array called `people` in an object called `myData`.
+
+
+
 ## For GUI Developers
 
 ### Getting started
