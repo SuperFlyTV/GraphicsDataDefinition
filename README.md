@@ -1,3 +1,11 @@
+# Deprecation notice
+
+**GDD has been replaced by [OGraf](https://ograf.ebu.io/), please use that instead.**
+
+_(The GDD definitions have in fact been copied over to OGraf, see [OGraf/issues/24](https://github.com/ebu/ograf/issues/24))_
+
+--- 
+
 # GDD - Graphics Data Definition
 
 [Link to this repo on github](https://github.com/superflytv/GraphicsDataDefinition/).
